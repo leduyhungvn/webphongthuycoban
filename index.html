@@ -305,7 +305,7 @@
             transform: scale(1.02);
         }
 
-        /* MODAL POPUP - chỉ có nút đóng ở footer, không có nút X */
+        /* MODAL POPUP */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -328,7 +328,7 @@
         }
         .modal-content {
             background: #ffffff;
-            max-width: 960px;
+            max-width: 1000px;
             width: 90%;
             max-height: 85vh;
             border-radius: 38px;
@@ -366,7 +366,6 @@
             font-weight: 600;
             letter-spacing: -0.2px;
         }
-        /* Đã xóa nút X (close-modal) khỏi HTML, không cần style cho nó */
         .modal-body {
             padding: 28px 30px;
             background: #fefefe;
@@ -386,6 +385,39 @@
         .badge-good { background: #d4edda; color: #155724; }
         .badge-normal { background: #fff3cd; color: #856404; }
         .badge-bad { background: #f8d7da; color: #721c24; }
+
+        /* Bảng trong popup */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .compare-table th {
+            background: #f1f5f9;
+            color: #1e2b3a;
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid #cbd5e0;
+        }
+        .compare-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        .total-row {
+            background: #fef9e7;
+            font-weight: bold;
+        }
+        .total-row td {
+            border-top: 2px solid #f1c40f;
+        }
 
         .explain-box, .direction-detail, .explain-diff {
             background: #eef2f7;
@@ -411,7 +443,6 @@
             margin-top: 30px;
             color: #5e6f8d;
         }
-        /* Thêm CSS để nội dung giải thích xuống dòng đúng */
         .explain-content {
             white-space: normal;
             word-break: break-word;
@@ -474,47 +505,28 @@
                 <h3>🔍 SO SÁNH CHI TIẾT HỢP TUỔI</h3>
             </div>
             <div class="modal-body" id="modalBody"></div>
-            <!-- THÊM MỚI: Khung giải thích ý nghĩa các yếu tố, mặc định ẩn -->
             <div id="modalExplainPanel" style="display: none; margin: 0 28px 20px 28px; background: #fef9e7; border-radius: 20px; padding: 16px 20px; border-left: 6px solid #f39c12;">
                 <div class="explain-content">
                     <strong>📖 Ý NGHĨA THỰC TẾ CỦA TỪNG YẾU TỐ HỢP TUỔI</strong>
                     <ul>
-                        <li><strong>1. Mệnh nạp âm</strong> - Yếu tố bản chất sâu xa nhất: khí chất, sức khỏe nền tảng, vận mệnh dài hạn.<br>
-                            ✅ Tương sinh: khỏe mạnh, sống lâu, vận mệnh hanh thông.<br>
-                            ❌ Tương khắc: dễ bệnh tật, trái tính trái nết nhau, cuộc sống vất vả lận đận.<br>
-                            ⚪ Bình: Nạp âm không sinh không khắc – sức khỏe nền tảng ổn định, cuộc sống bình thường.</li>
-                        <li><strong>2. Thiên can</strong> - Đại diện tính cách bên ngoài, giao tiếp, sự nghiệp và quan hệ xã hội.<br>
-                            ✅ Hợp: ăn ý trong lời nói, làm ăn thuận lợi, dễ được quý nhân giúp.<br>
-                            ❌ Xung: hay bất đồng quan điểm, dễ cãi vã, dễ vướng tranh chấp công việc.<br>
-                            ⚪ Bình: Thiên can bình hòa – nói chuyện, làm ăn bình thường, khó được quý nhân giúp lớn, cũng ít cãi vã.</li>
-                        <li><strong>3. Địa chi</strong> - Ảnh hưởng đến tình cảm, hôn nhân, con cái và quan hệ thân tộc.<br>
-                            ✅ Lục hợp / Tam hợp: vợ chồng hòa thuận, con cái ngoan, gia đình êm ấm.<br>
-                            ❌ Lục xung / Tứ hành xung: dỗi hờn, ly thân, khó có con hoặc con hay đau ốm.<br>
-                            ⚪ Bình: Địa chi không hợp, không xung, không hình, không hại – tình cảm gia đình ở mức trung bình, con cái bình thường.</li>
-                        <li><strong>4. Cung phi</strong> - Luận sự hòa hợp tâm tính, mức độ dễ/dễ xung đột trong các quyết định chung, đặc biệt là về nhà cửa, tài sản và không gian sống chung.<br>
-                            ✅ Cùng nhóm Đông hoặc Tây Tứ Trạch: dễ chọn hướng nhà, sống hài hòa, các việc trong nhà làm đến đâu dễ hoàn thành tốt đến đó. Dễ tích khí vận.<br>
-                            ❌ Khác nhóm trạch: bất đồng khi xây/sửa nhà, khí vận trong nhà dễ xung đột.<br>
-                            ⚪ Bình: Ổn định, tĩnh tâm, không bứt phá. Nếu gia cảnh tốt thì giữ ổn định cũng là tin tốt.</li>
-                        <li><strong>5. Niên mệnh</strong> - Xem vận hạn từng năm, tương tác theo thời gian, sự ổn định dài hạn.<br>
-                            ✅ Tương sinh: năm hạn dễ qua, cùng nhau vượng phát.<br>
-                            ❌ Tương khắc: năm hạn dễ đổ vỡ, bệnh tật, kiện tụng trùng nhau.<br>
-                            ⚪ Bình: Niên mệnh bình thường – năm hạn không đỡ được nhau nhưng cũng không xô đẩy nhau.</li>
-                        <li><strong>6. Bát trạch</strong> (góc nhìn bổ sung, không ảnh hưởng 5 mục trên) - Chọn hướng nhà, hướng bếp, bàn thờ, giường ngủ hài hòa với gia chủ.<br>
-                            ✅ Cùng Đông hoặc Tây Tứ Trạch: chọn hướng dễ, phong thủy nhà vượng.<br>
-                            ❌ Khác trạch: phải hóa giải phức tạp, dễ phạm hướng xấu.</li>
+                        <li><strong>1. Mệnh nạp âm</strong> - Yếu tố bản chất sâu xa nhất: khí chất, sức khỏe nền tảng, vận mệnh dài hạn.<br>✅ Tương sinh: khỏe mạnh, sống lâu, vận mệnh hanh thông.<br>❌ Tương khắc: dễ bệnh tật, trái tính trái nết nhau, cuộc sống vất vả lận đận.<br>⚪ Bình: Nạp âm không sinh không khắc – sức khỏe nền tảng ổn định, cuộc sống bình thường.</li>
+                        <li><strong>2. Thiên can</strong> - Đại diện tính cách bên ngoài, giao tiếp, sự nghiệp và quan hệ xã hội.<br>✅ Hợp: ăn ý trong lời nói, làm ăn thuận lợi, dễ được quý nhân giúp.<br>❌ Xung: hay bất đồng quan điểm, dễ cãi vã, dễ vướng tranh chấp công việc.<br>⚪ Bình: Thiên can bình hòa – nói chuyện, làm ăn bình thường, khó được quý nhân giúp lớn, cũng ít cãi vã.</li>
+                        <li><strong>3. Địa chi</strong> - Ảnh hưởng đến tình cảm, hôn nhân, con cái và quan hệ thân tộc.<br>✅ Lục hợp / Tam hợp: vợ chồng hòa thuận, con cái ngoan, gia đình êm ấm.<br>❌ Lục xung / Tứ hành xung: dỗi hờn, ly thân, khó có con hoặc con hay đau ốm.<br>⚪ Bình: Địa chi không hợp, không xung, không hình, không hại – tình cảm gia đình ở mức trung bình, con cái bình thường.</li>
+                        <li><strong>4. Cung phi</strong> - Luận sự hòa hợp tâm tính, mức độ dễ/dễ xung đột trong các quyết định chung, đặc biệt là về nhà cửa, tài sản và không gian sống chung.<br>✅ Cùng nhóm Đông hoặc Tây Tứ Trạch: dễ chọn hướng nhà, sống hài hòa, các việc trong nhà làm đến đâu dễ hoàn thành tốt đến đó. Dễ tích khí vận.<br>❌ Khác nhóm trạch: bất đồng khi xây/sửa nhà, khí vận trong nhà dễ xung đột.<br>⚪ Bình: Ổn định, tĩnh tâm, không bứt phá. Nếu gia cảnh tốt thì giữ ổn định cũng là tin tốt.</li>
+                        <li><strong>5. Niên mệnh</strong> - Xem vận hạn từng năm, tương tác theo thời gian, sự ổn định dài hạn.<br>✅ Tương sinh: năm hạn dễ qua, cùng nhau vượng phát.<br>❌ Tương khắc: năm hạn dễ đổ vỡ, bệnh tật, kiện tụng trùng nhau.<br>⚪ Bình: Niên mệnh bình thường – năm hạn không đỡ được nhau nhưng cũng không xô đẩy nhau.</li>
+                        <li><strong>6. Bát trạch</strong> (góc nhìn bổ sung, không ảnh hưởng 5 mục trên) - Chọn hướng nhà, hướng bếp, bàn thờ, giường ngủ hài hòa với gia chủ.<br>✅ Cùng Đông hoặc Tây Tứ Trạch: chọn hướng dễ, phong thủy nhà vượng.<br>❌ Khác trạch: phải hóa giải phức tạp, dễ phạm hướng xấu.</li>
                     </ul>
                     <p style="margin-top: 12px; font-style: italic; font-size: 0.85rem;">※ Những giải thích này chỉ mang tính tham khảo, không thay đổi kết quả số điểm bên trên.</p>
                 </div>
             </div>
             <div class="modal-footer">
-                <!-- THÊM MỚI: Nút HIỂN THỊ bên cạnh nút Đóng -->
                 <button id="modalShowExplainBtn" style="background:#f39c12; min-width:100px; margin-right: 10px;">📖 HIỂN THỊ</button>
                 <button id="modalCloseFooter" style="background:#2c7da0; min-width:100px;">Đóng</button>
             </div>
         </div>
     </div>
 
-    <!-- ========== PHẦN GIẢI THÍCH: GIỮ NGUYÊN 100% NỘI DUNG FILE GỐC ========== -->
+    <!-- ========== PHẦN GIẢI THÍCH: GIỮ NGUYÊN 100% ========== -->
     <div class="explain-box">
         <h3>Cách tính điểm hợp tuổi (thang 10) – chi tiết</h3>
         <ul>
@@ -547,7 +559,6 @@
     <div class="direction-detail">
         <h3>🟢 NHÓM HƯỚNG TỐT (CÁT HƯỚNG)</h3>
         <p>Đây là những hướng đón nhận các luồng khí tốt lành (Sinh Khí) từ vũ trụ, giúp gia chủ gặp may mắn, thuận lợi trong công việc và cuộc sống.</p>
-        
         <h4>1. Sinh Khí - Hướng "Đại Cát"</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Sinh" là sinh sôi, "Khí" là năng lượng. Đây là nguồn năng lượng mạnh mẽ nhất, tượng trưng cho sự khởi đầu thuận lợi và phát triển.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -556,7 +567,6 @@
             <li><strong>Sức khỏe:</strong> Năng lượng Sinh Khí dồi dào giúp cơ thể tràn đầy sức sống, ít bệnh vặt, tinh thần phấn chấn.</li>
             <li><strong>Gia đạo:</strong> Rất vượng về người (con cháu đề huề, đông vui), các mối quan hệ xã hội được mở rộng, gặp được nhiều quý nhân phù trợ.</li>
         </ul>
-        
         <h4>2. Phúc Đức (Diên Niên) - Hướng "Đại Cát"</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Diên Niên" nghĩa là kéo dài tuổi thọ, sự hòa thuận. "Phúc Đức" là phúc phần tổ tiên để lại.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -565,7 +575,6 @@
             <li><strong>Tài lộc:</strong> Tài vận rất tốt, tiền bạc đến một cách ổn định, bền vững, không phải tài lộc nhất thời.</li>
             <li><strong>Sức khỏe:</strong> Sống lâu, khỏe mạnh, ít bệnh tật nhờ sự ổn định của nguồn năng lượng.</li>
         </ul>
-        
         <h4>3. Thiên Y - Hướng "Cát"</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Thiên" là trời, "Y" là thuốc chữa bệnh. Có nghĩa là được trời ban cho sức khỏe và sự che chở.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -574,7 +583,6 @@
             <li><strong>Tài lộc:</strong> Tài vận cũng tốt, có quý nhân giúp đỡ, tiền bạc có phần nhẹ nhàng, không quá vất vả.</li>
             <li><strong>Năng lượng:</strong> Mang đến sự an yên, che chở, giúp gia chủ vượt qua khó khăn về bệnh tật.</li>
         </ul>
-        
         <h4>4. Phục Vị - Hướng "Bình Cát" (Tiểu Cát)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Phục" là quay về, "Vị" là vị trí. Tượng trưng cho sự tĩnh tâm, ổn định và nương tựa vào chính mình.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -583,10 +591,8 @@
             <li><strong>Tài lộc:</strong> Ở mức trung bình, khá ổn định, ít biến động lớn. Không phải là hướng để cầu mong sự giàu có vượt bậc.</li>
             <li><strong>Sức khỏe & Gia vận:</strong> Mọi thứ ở mức ổn định, không xấu nhưng cũng không có gì đột phá. Đây là nguồn năng lượng hỗ trợ cho sự vững chắc hơn là sự phát triển.</li>
         </ul>
-        
         <h3>🔴 NHÓM HƯỚNG XẤU (HUNG HƯỚNG)</h3>
         <p>Đây là các hướng đón nhận các luồng khí xấu (Sát Khí), gây ra trở ngại, tai họa và suy giảm năng lượng sống.</p>
-        
         <h4>1. Tuyệt Mạng - Hướng "Đại Hung" (Xấu Nhất)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Tuyệt" là chấm dứt, "Mạng" là sinh mệnh. Đây là hướng có năng lượng sát thương mạnh nhất, tượng trưng cho sự suy vong và kết thúc.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -595,7 +601,6 @@
             <li><strong>Gia đạo:</strong> Nguy cơ tuyệt tự (khó có con), mâu thuẫn gia đình đến mức đổ vỡ nghiêm trọng, ly tán.</li>
             <li><strong>Tai họa:</strong> Dễ gặp các tai nạn bất ngờ, thương tật, kiện tụng dẫn đến hao tài tốn của nặng nề, thậm chí mất hết.</li>
         </ul>
-        
         <h4>2. Ngũ Quỷ - Hướng "Hung" (Xấu Nhì)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Ngũ Quỷ" tức là năm con quỷ (hỏa tinh) phá phách. Năng lượng của hướng này rất hỗn loạn, liên quan đến hỏa hoạn và thị phi.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -604,7 +609,6 @@
             <li><strong>An ninh:</strong> Cảnh giác với hỏa hoạn (cháy nhà), trộm cướp.</li>
             <li><strong>Sức khỏe & Tinh thần:</strong> Sức khỏe giảm sút, hay gặp các vấn đề về tim mạch, máu huyết. Tinh thần bất ổn, dễ nổi nóng, gây gổ, mất kiểm soát.</li>
         </ul>
-        
         <h4>3. Lục Sát - Hướng "Hung" (Xấu Thứ Ba)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Lục" là sáu, "Sát" là sát khí. Tượng trưng cho sáu dạng tai họa, rắc rối liên miên.</p>
         <p><strong>Tác động chi tiết:</strong></p>
@@ -613,18 +617,13 @@
             <li><strong>Gia đạo:</strong> Vợ chồng dễ bất hòa, người nhà hay có xích mích.</li>
             <li><strong>Tài lộc & Sức khỏe:</strong> Tài vận không tốt, hay gặp những rủi ro nhỏ như mất mát đồ đạc. Bệnh tật cũng đến liên tục, tuy không nguy hiểm tức thời như Tuyệt Mạng nhưng dai dẳng, hao mòn sức lực.</li>
         </ul>
-        
         <h4>4. Hoạ Hại - Hướng "Tiểu Hung" (Ít Xấu Nhất)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Họa" là tai họa, "Hại" là tổn hại. Đây là hướng mang đến những điều phiền toái, hao hụt nhỏ.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
         <ul>
             <li><strong>Tài lộc:</strong> Khó tích tụ tiền của, tiền kiếm được dễ bị thất thoát vào các chi phí không tên, làm việc vất vả nhưng không dư dả.</li>
             <li><strong>Quan hệ:</strong> Dễ gặp chuyện thị phi, bị đàm tiếu, bị người khác hãm hại ngầm hoặc tranh giành lợi lộc nhỏ.</li>
             <li><strong>An ninh:</strong> Cần đề phòng trộm cướp, mất mát tài sản cá nhân. Sức khỏe và gia vận sa sút nhẹ, tạo cảm giác bất an, không thoải mái.</li>
         </ul>
-        
-        <h4>Kết luận và lưu ý:</h4>
-        <p><strong>Sự tương tác:</strong> Các hướng tốt xấu này được áp dụng để chọn hướng nhà, hướng bếp, hướng bàn thờ, hướng giường ngủ và hướng bàn làm việc. Mỗi không gian chức năng lại có một yêu cầu khác nhau (ví dụ: phòng ngủ và bàn thờ nên ưu tiên Sinh Khí và Phúc Đức; bếp có thể đặt ở hướng xấu nhưng nhìn về hướng tốt...).</p>
     </div>
 
     <div class="explain-diff">
@@ -956,6 +955,8 @@
         };
     }
 
+    // ========== HÀM showCompareModal MỚI - DẠNG BẢNG ==========
+    // Chỉ thay đổi popup, giữ nguyên toàn bộ phần còn lại của trang
     function showCompareModal(me, partner, relation) {
         const modal = document.getElementById('compareModal');
         const modalBody = document.getElementById('modalBody');
@@ -974,68 +975,127 @@
         const partnerTrach = isPartnerEast ? 'Đông tứ trạch' : 'Tây tứ trạch';
         const cungTrach = (isMeEast === isPartnerEast) ? 'Cùng trạch' : 'Khác trạch';
 
-        const getBadge = (rel) => {
-            if (rel.includes('TỐT') || rel.includes('ỨNG TƯƠNG SINH') || 
-                rel.includes('Hợp') || rel.includes('Lục hợp') || rel.includes('Tam hợp') || 
-                rel.includes('Sinh Khí') || rel.includes('Thiên Y') || rel.includes('Phúc Đức') || rel.includes('Phục Vị') ||
-                rel.includes('Tương Sinh')) {
-                return '<span class="badge-good">Tốt</span>';
-            }
-            if (rel.includes('XẤU') || rel.includes('ỨNG TƯƠNG KHẮC') ||
-                rel.includes('xung') || rel.includes('phá') || rel.includes('hại') || rel.includes('hình') ||
-                rel.includes('Tuyệt') || rel.includes('Lục Sát') || rel.includes('Hoạ') || rel.includes('Ngũ Quỷ') ||
-                rel.includes('Tương Khắc')) {
-                return '<span class="badge-bad">Xấu</span>';
-            }
-            return '<span class="badge-normal">Bình</span>';
+        // Tính điểm từng yếu tố (không bao gồm Bát trạch)
+        let diemMenh = 0, diemThienCan = 0, diemDiaChi = 0, diemCung = 0, diemNiem = 0;
+        
+        if (relation.menh.includes('TỐT TƯƠNG SINH')) diemMenh = 2;
+        else if (relation.menh.includes('ỨNG TƯƠNG SINH')) diemMenh = 1.5;
+        else if (relation.menh.includes('BÌNH')) diemMenh = 1;
+        else if (relation.menh.includes('ỨNG TƯƠNG KHẮC')) diemMenh = 0.5;
+        else if (relation.menh.includes('XẤU TƯƠNG KHẮC')) diemMenh = 0;
+        
+        if (relation.thienCan.includes('Hợp')) diemThienCan = 2;
+        else if (relation.thienCan.includes('Bình')) diemThienCan = 1;
+        else if (relation.thienCan.includes('Xung') || relation.thienCan.includes('Khắc')) diemThienCan = 0;
+        else diemThienCan = 1;
+        
+        if (relation.diaChi.includes('Lục hợp') || relation.diaChi.includes('Tam hợp')) diemDiaChi = 2;
+        else if (relation.diaChi.includes('Bình')) diemDiaChi = 1;
+        else diemDiaChi = 0;
+        
+        if (relation.cung.includes('Sinh Khí') || relation.cung.includes('Phúc Đức') || relation.cung.includes('Thiên Y') || relation.cung.includes('Phục Vị')) diemCung = 2;
+        else if (relation.cung.includes('Tuyệt Mạng') || relation.cung.includes('Ngũ Quỷ') || relation.cung.includes('Lục Sát') || relation.cung.includes('Hoạ Hại')) diemCung = 0;
+        else diemCung = 1;
+        
+        if (relation.niem.includes('TỐT TƯƠNG SINH')) diemNiem = 2;
+        else if (relation.niem.includes('ỨNG TƯƠNG SINH')) diemNiem = 1.5;
+        else if (relation.niem.includes('BÌNH')) diemNiem = 1;
+        else if (relation.niem.includes('ỨNG TƯƠNG KHẮC')) diemNiem = 0.5;
+        else if (relation.niem.includes('XẤU TƯƠNG KHẮC')) diemNiem = 0;
+        
+        const tongDiem = diemMenh + diemThienCan + diemDiaChi + diemCung + diemNiem;
+        
+        let xepLoai = '';
+        let danhGia = '';
+        if (tongDiem >= 8) {
+            xepLoai = '⭐ RẤT HỢP';
+            danhGia = 'Rất tốt cho hôn nhân, tình cảm và tài lộc.';
+        } else if (tongDiem >= 6) {
+            xepLoai = '✅ KHÁ HỢP';
+            danhGia = 'Tốt, có thể kết hợp với nhau.';
+        } else if (tongDiem >= 4) {
+            xepLoai = '⚠️ TRUNG BÌNH';
+            danhGia = 'Có thể chấp nhận được, cần hóa giải một số yếu tố.';
+        } else {
+            xepLoai = '❌ HẠN CHẾ';
+            danhGia = 'Nên xem xét kỹ trước khi kết hợp.';
+        }
+
+        const getBadge = (diem) => {
+            if (diem >= 1.5) return '<span class="badge-good">Tốt</span>';
+            if (diem >= 0.5) return '<span class="badge-normal">Bình</span>';
+            return '<span class="badge-bad">Xấu</span>';
         };
 
-        const getCanHành = (stem) => {
-            if (stem === 'Giáp' || stem === 'Ất') return 'Mộc';
-            if (stem === 'Bính' || stem === 'Đinh') return 'Hỏa';
-            if (stem === 'Mậu' || stem === 'Kỷ') return 'Thổ';
-            if (stem === 'Canh' || stem === 'Tân') return 'Kim';
-            return 'Thủy';
+        const getQuanHeText = (rel, diem) => {
+            if (diem >= 1.5) return rel + ' ✓';
+            if (diem >= 0.5) return rel;
+            return rel + ' ✗';
         };
 
         const html = `
-            <div class="compare-grid-modal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #e76f51;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">📌 Về Mệnh (nạp âm)</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${menhMe}</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${menhPartner}</p>
-                    <p><strong>Quan hệ:</strong> ${relation.menh} ${getBadge(relation.menh)}</p>
-                </div>
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #f4a261;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">🌿 Về Thiên can</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${me.stem} (${amDuongMe} ${getCanHành(me.stem)})</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${partner.stem} (${amDuongPartner} ${getCanHành(partner.stem)})</p>
-                    <p><strong>Quan hệ:</strong> ${relation.thienCan} ${getBadge(relation.thienCan)}</p>
-                </div>
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #2a9d8f;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">🐉 Về Địa chi</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${me.branch}</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${partner.branch}</p>
-                    <p><strong>Quan hệ:</strong> ${relation.diaChi} ${getBadge(relation.diaChi)}</p>
-                </div>
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #2874a6;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">🏯 Về Cung phi</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${me.cung} (${meTrach})</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${partner.cung} (${partnerTrach})</p>
-                    <p><strong>Quan hệ:</strong> ${relation.cung} ${getBadge(relation.cung)}</p>
-                </div>
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #8e44ad;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">⚖️ Về Niên mệnh (hành cung)</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${me.niemMenh}</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${partner.niemMenh}</p>
-                    <p><strong>Quan hệ:</strong> ${relation.niem} ${getBadge(relation.niem)}</p>
-                </div>
-                <div class="compare-item-modal" style="background:white; border-radius:24px; padding:18px 20px; box-shadow:0 8px 18px rgba(0,0,0,0.05); border-left:6px solid #16a085;">
-                    <h3 style="margin:0 0 15px 0; color:#1e2b3a; font-weight:600;">🏠 Bát trạch</h3>
-                    <p><strong>${gioiTinhMe}:</strong> ${meTrach}</p>
-                    <p><strong>${gioiTinhPartner}:</strong> ${partnerTrach}</p>
-                    <p><strong>Kết luận:</strong> ${cungTrach}</p>
-                </div>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Yếu tố</th>
+                        <th>${gioiTinhMe}</th>
+                        <th>${gioiTinhPartner}</th>
+                        <th>Quan hệ</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mệnh nạp âm</strong></td>
+                        <td>${menhMe}</td>
+                        <td>${menhPartner}</td>
+                        <td>${getQuanHeText(relation.menh, diemMenh)}</td>
+                        <td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thiên can</strong></td>
+                        <td>${me.stem} (${getAmDuong(me.stem)})</td>
+                        <td>${partner.stem} (${getAmDuong(partner.stem)})</td>
+                        <td>${getQuanHeText(relation.thienCan, diemThienCan)}</td>
+                        <td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Địa chi</strong></td>
+                        <td>${me.branch}</td>
+                        <td>${partner.branch}</td>
+                        <td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td>
+                        <td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cung phi</strong></td>
+                        <td>${me.cung} (${meTrach})</td>
+                        <td>${partner.cung} (${partnerTrach})</td>
+                        <td>${getQuanHeText(relation.cung, diemCung)}</td>
+                        <td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Niên mệnh</strong></td>
+                        <td>${me.niemMenh}</td>
+                        <td>${partner.niemMenh}</td>
+                        <td>${getQuanHeText(relation.niem, diemNiem)}</td>
+                        <td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bát trạch</strong></td>
+                        <td>${meTrach}</td>
+                        <td>${partnerTrach}</td>
+                        <td>${cungTrach}</td>
+                        <td style="color:#888;">—</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>🎯 Tổng kết</strong></td>
+                        <td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td>
+                        <td><strong>${tongDiem.toFixed(1)} / 10</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 16px; padding: 12px; background: #e8f4f8; border-radius: 16px; text-align: center; font-size: 0.9rem;">
+                📝 ${danhGia}
             </div>
         `;
         modalBody.innerHTML = html;
@@ -1140,7 +1200,7 @@
         const topDiv = document.getElementById('top20Container');
         topDiv.style.display = 'block';
         let topHtml = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div>`;
-        topHtml += `<table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th><tr>`;
+        topHtml += `<table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>`;
         sorted.forEach(item => {
             topHtml += `<tr>
                 <td>${item.year}</td>
@@ -1264,9 +1324,7 @@
         sameTable.classList.add('collapsed');
         sumTable.classList.add('collapsed');
         
-        // Gán lại sự kiện cho các nút toggle
         document.querySelectorAll('.toggle-btn').forEach(btn => {
-            // Loại bỏ listener cũ (nếu có) bằng cách clone và thay thế để tránh trùng lặp
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
             newBtn.addEventListener('click', function(e) {
@@ -1334,7 +1392,6 @@
         closeFooter.addEventListener('click', closeModalFunc);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFunc(); });
 
-        // ========== THÊM MỚI: SỰ KIỆN CHO NÚT HIỂN THỊ/ẨN GIẢI THÍCH ==========
         const explainPanel = document.getElementById('modalExplainPanel');
         const showExplainBtn = document.getElementById('modalShowExplainBtn');
         if (explainPanel && showExplainBtn) {
