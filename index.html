@@ -230,10 +230,13 @@
             padding: 10px 20px;
             background: #e9edf4;
             border-radius: 18px 18px 0 0;
+            cursor: pointer;
+            user-select: none;
         }
         .table-header h2 {
             margin: 0;
             font-size: 1.5rem;
+            pointer-events: none;
         }
         .toggle-btn {
             background: #2c7da0;
@@ -245,6 +248,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
+            pointer-events: auto;
         }
         .toggle-btn:hover {
             background: #1e5f7d;
@@ -301,7 +305,7 @@
             transform: scale(1.02);
         }
 
-        /* MODAL POPUP cho so sánh chi tiết - thêm mới nhưng không ảnh hưởng nội dung */
+        /* MODAL POPUP - chỉ có nút đóng ở footer, không có nút X */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -362,25 +366,7 @@
             font-weight: 600;
             letter-spacing: -0.2px;
         }
-        .close-modal {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            font-size: 1.9rem;
-            line-height: 1;
-            color: white;
-            cursor: pointer;
-            border-radius: 60px;
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-        .close-modal:hover {
-            background: #c0392b;
-            transform: rotate(90deg);
-        }
+        /* Đã xóa nút X (close-modal) khỏi HTML, không cần style cho nó */
         .modal-body {
             padding: 28px 30px;
             background: #fefefe;
@@ -425,6 +411,20 @@
             margin-top: 30px;
             color: #5e6f8d;
         }
+        /* Thêm CSS để nội dung giải thích xuống dòng đúng */
+        .explain-content {
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+        .explain-content ul {
+            margin-top: 10px;
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        .explain-content li {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -467,15 +467,48 @@
         <div id="summaryTable" class="scrollable collapsed"></div>
     </div>
 
-    <!-- MODAL POPUP cho so sánh chi tiết, thay thế vùng compare cố định -->
+    <!-- MODAL POPUP -->
     <div id="compareModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>🔍 SO SÁNH CHI TIẾT HỢP TUỔI</h3>
-                <button class="close-modal" id="closeModalBtn">✕</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
+            <!-- THÊM MỚI: Khung giải thích ý nghĩa các yếu tố, mặc định ẩn -->
+            <div id="modalExplainPanel" style="display: none; margin: 0 28px 20px 28px; background: #fef9e7; border-radius: 20px; padding: 16px 20px; border-left: 6px solid #f39c12;">
+                <div class="explain-content">
+                    <strong>📖 Ý NGHĨA THỰC TẾ CỦA TỪNG YẾU TỐ HỢP TUỔI</strong>
+                    <ul>
+                        <li><strong>1. Mệnh nạp âm</strong> - Yếu tố bản chất sâu xa nhất: khí chất, sức khỏe nền tảng, vận mệnh dài hạn.<br>
+                            ✅ Tương sinh: khỏe mạnh, sống lâu, vận mệnh hanh thông.<br>
+                            ❌ Tương khắc: dễ bệnh tật, trái tính trái nết nhau, cuộc sống vất vả lận đận.<br>
+                            ⚪ Bình: Nạp âm không sinh không khắc – sức khỏe nền tảng ổn định, cuộc sống bình thường.</li>
+                        <li><strong>2. Thiên can</strong> - Đại diện tính cách bên ngoài, giao tiếp, sự nghiệp và quan hệ xã hội.<br>
+                            ✅ Hợp: ăn ý trong lời nói, làm ăn thuận lợi, dễ được quý nhân giúp.<br>
+                            ❌ Xung: hay bất đồng quan điểm, dễ cãi vã, dễ vướng tranh chấp công việc.<br>
+                            ⚪ Bình: Thiên can bình hòa – nói chuyện, làm ăn bình thường, khó được quý nhân giúp lớn, cũng ít cãi vã.</li>
+                        <li><strong>3. Địa chi</strong> - Ảnh hưởng đến tình cảm, hôn nhân, con cái và quan hệ thân tộc.<br>
+                            ✅ Lục hợp / Tam hợp: vợ chồng hòa thuận, con cái ngoan, gia đình êm ấm.<br>
+                            ❌ Lục xung / Tứ hành xung: dỗi hờn, ly thân, khó có con hoặc con hay đau ốm.<br>
+                            ⚪ Bình: Địa chi không hợp, không xung, không hình, không hại – tình cảm gia đình ở mức trung bình, con cái bình thường.</li>
+                        <li><strong>4. Cung phi</strong> - Luận sự hòa hợp tâm tính, mức độ dễ/dễ xung đột trong các quyết định chung, đặc biệt là về nhà cửa, tài sản và không gian sống chung.<br>
+                            ✅ Cùng nhóm Đông hoặc Tây Tứ Trạch: dễ chọn hướng nhà, sống hài hòa, các việc trong nhà làm đến đâu dễ hoàn thành tốt đến đó. Dễ tích khí vận.<br>
+                            ❌ Khác nhóm trạch: bất đồng khi xây/sửa nhà, khí vận trong nhà dễ xung đột.<br>
+                            ⚪ Bình: Ổn định, tĩnh tâm, không bứt phá. Nếu gia cảnh tốt thì giữ ổn định cũng là tin tốt.</li>
+                        <li><strong>5. Niên mệnh</strong> - Xem vận hạn từng năm, tương tác theo thời gian, sự ổn định dài hạn.<br>
+                            ✅ Tương sinh: năm hạn dễ qua, cùng nhau vượng phát.<br>
+                            ❌ Tương khắc: năm hạn dễ đổ vỡ, bệnh tật, kiện tụng trùng nhau.<br>
+                            ⚪ Bình: Niên mệnh bình thường – năm hạn không đỡ được nhau nhưng cũng không xô đẩy nhau.</li>
+                        <li><strong>6. Bát trạch</strong> (góc nhìn bổ sung, không ảnh hưởng 5 mục trên) - Chọn hướng nhà, hướng bếp, bàn thờ, giường ngủ hài hòa với gia chủ.<br>
+                            ✅ Cùng Đông hoặc Tây Tứ Trạch: chọn hướng dễ, phong thủy nhà vượng.<br>
+                            ❌ Khác trạch: phải hóa giải phức tạp, dễ phạm hướng xấu.</li>
+                    </ul>
+                    <p style="margin-top: 12px; font-style: italic; font-size: 0.85rem;">※ Những giải thích này chỉ mang tính tham khảo, không thay đổi kết quả số điểm bên trên.</p>
+                </div>
+            </div>
             <div class="modal-footer">
+                <!-- THÊM MỚI: Nút HIỂN THỊ bên cạnh nút Đóng -->
+                <button id="modalShowExplainBtn" style="background:#f39c12; min-width:100px; margin-right: 10px;">📖 HIỂN THỊ</button>
                 <button id="modalCloseFooter" style="background:#2c7da0; min-width:100px;">Đóng</button>
             </div>
         </div>
@@ -563,7 +596,7 @@
             <li><strong>Tai họa:</strong> Dễ gặp các tai nạn bất ngờ, thương tật, kiện tụng dẫn đến hao tài tốn của nặng nề, thậm chí mất hết.</li>
         </ul>
         
-        <h4>2. Ngũ Quỷ - Hướng "Hung" (Xấu Thứ Ba)</h4>
+        <h4>2. Ngũ Quỷ - Hướng "Hung" (Xấu Nhì)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Ngũ Quỷ" tức là năm con quỷ (hỏa tinh) phá phách. Năng lượng của hướng này rất hỗn loạn, liên quan đến hỏa hoạn và thị phi.</p>
         <p><strong>Tác động chi tiết:</strong></p>
         <ul>
@@ -572,7 +605,7 @@
             <li><strong>Sức khỏe & Tinh thần:</strong> Sức khỏe giảm sút, hay gặp các vấn đề về tim mạch, máu huyết. Tinh thần bất ổn, dễ nổi nóng, gây gổ, mất kiểm soát.</li>
         </ul>
         
-        <h4>3. Lục Sát - Hướng "Hung" (Xấu Thứ Nhì)</h4>
+        <h4>3. Lục Sát - Hướng "Hung" (Xấu Thứ Ba)</h4>
         <p><strong>Ý nghĩa tên gọi:</strong> "Lục" là sáu, "Sát" là sát khí. Tượng trưng cho sáu dạng tai họa, rắc rối liên miên.</p>
         <p><strong>Tác động chi tiết:</strong></p>
         <ul>
@@ -838,8 +871,8 @@
         "Phúc Đức": "Hướng tốt nhì, tài vận rất tốt, sống thọ, khoẻ mạnh, vợ chồng hòa khí.",
         "Phục Vị": "Hướng tốt thứ 4, tài vận tốt thường, khí vận trung bình, sức khoẻ và gia vận trung bình.",
         "Tuyệt Mạng": "Hướng xấu nhất, tài vận cực kém, nhiều bệnh, tổn thọ, họa tuyệt tự, thương tật bất ngờ.",
-        "Ngũ Quỷ": "Hướng xấu thứ ba, phá tài bại nghiệp, coi chừng hóa hoạn, sức khoẻ kém, tinh thần không ổn định.",
-        "Lục Sát": "Hướng ít xấu thứ nhì, tài vận không tốt, tranh cãi thị phi, tai họa liên tục, nhiều bệnh.",
+        "Ngũ Quỷ": "Hướng xấu nhì, phá tài bại nghiệp, coi chừng hóa hoạn, sức khoẻ kém, tinh thần không ổn định.",
+        "Lục Sát": "Hướng xấu thứ ba, tài vận không tốt, tranh cãi thị phi, tai họa liên tục, nhiều bệnh.",
         "Hoạ Hại": "Hướng ít xấu nhất, khó tích tụ tiền của, kiện tụng thị phi, thường bị tranh chấp, trộm cướp."
     };
 
@@ -849,7 +882,7 @@
         for (let [huong, cungHuong] of Object.entries(huongCung)) {
             const [tenQH, diem] = getCungRelation(cungNguoi, cungHuong);
             if (tenQH === "Lỗi") continue;
-            const saoTot = ["Sinh Khí", "Thiên Y", "Phúc Đức", "Phục Vị"];
+            const saoTot = ["Sinh Khí", "Phúc Đức", "Thiên Y",  "Phục Vị"];
             const item = { huong, tenQH, moTa: moTaQuanHe[tenQH] || "" };
             if (saoTot.includes(tenQH)) {
                 tot.push(item);
@@ -857,7 +890,7 @@
                 xau.push(item);
             }
         }
-        const thuTuTot = ["Sinh Khí", "Thiên Y", "Phúc Đức", "Phục Vị"];
+        const thuTuTot = ["Sinh Khí", "Phúc Đức", "Thiên Y", "Phục Vị"];
         const thuTuXau = ["Tuyệt Mạng", "Ngũ Quỷ", "Lục Sát", "Hoạ Hại"];
         tot.sort((a,b) => thuTuTot.indexOf(a.tenQH) - thuTuTot.indexOf(b.tenQH));
         xau.sort((a,b) => thuTuXau.indexOf(a.tenQH) - thuTuXau.indexOf(b.tenQH));
@@ -1107,7 +1140,7 @@
         const topDiv = document.getElementById('top20Container');
         topDiv.style.display = 'block';
         let topHtml = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div>`;
-        topHtml += `<table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>`;
+        topHtml += `<table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th><tr>`;
         sorted.forEach(item => {
             topHtml += `<tr>
                 <td>${item.year}</td>
@@ -1122,7 +1155,7 @@
 
         let html1 = `<table><thead><tr>`;
         html1 += `<th>Năm<br>đối phương</th><th>Mệnh</th><th>QHệ<br>Mệnh</th><th>Thiên can</th><th>QHệ<br>Thiên can</th><th>Địa chi</th><th>QHệ<br>Địa chi</th><th>Cung</th><th>QHệ<br>Cung</th><th>Niên mệnh</th><th>QHệ<br>Niên</th><th>Điểm</th><th>Thao tác</th>`;
-        html1 += `<tr></thead><tbody>`;
+        html1 += `</tr></thead><tbody>`;
 
         rows.forEach((r, index) => {
             html1 += `<tr data-index="${index}">`;
@@ -1184,7 +1217,7 @@
             html2 += `<td><button class="btn-compare" data-index="${index}" data-table="same">🔍 So sánh</button></td>`;
             html2 += `</tr>`;
         });
-        html2 += `</tbody><tr>`;
+        html2 += `</tbody></table>`;
         document.getElementById('sameGenderTable').innerHTML = html2;
 
         let summaryRows = [];
@@ -1231,8 +1264,25 @@
         sameTable.classList.add('collapsed');
         sumTable.classList.add('collapsed');
         
+        // Gán lại sự kiện cho các nút toggle
         document.querySelectorAll('.toggle-btn').forEach(btn => {
-            btn.textContent = 'Mở rộng';
+            // Loại bỏ listener cũ (nếu có) bằng cách clone và thay thế để tránh trùng lặp
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const targetId = this.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    if (target.classList.contains('collapsed')) {
+                        target.classList.remove('collapsed');
+                        this.textContent = 'Thu lại';
+                    } else {
+                        target.classList.add('collapsed');
+                        this.textContent = 'Mở rộng';
+                    }
+                }
+            });
         });
 
         document.querySelectorAll('#diffGenderTable .btn-compare').forEach(btn => {
@@ -1269,22 +1319,6 @@
         select.value = 1985;
     }
 
-    function initToggleButtons() {
-        document.querySelectorAll('.toggle-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                const target = document.getElementById(targetId);
-                if (target.classList.contains('collapsed')) {
-                    target.classList.remove('collapsed');
-                    this.textContent = 'Thu lại';
-                } else {
-                    target.classList.add('collapsed');
-                    this.textContent = 'Mở rộng';
-                }
-            });
-        });
-    }
-
     window.onload = function() {
         populateYearSelect();
         document.getElementById('xemBtn').addEventListener('click', function() {
@@ -1293,15 +1327,29 @@
             renderTable(year, gender);
         });
         renderTable(1985, 'female');
-        initToggleButtons();
 
         const modal = document.getElementById('compareModal');
-        const closeBtn = document.getElementById('closeModalBtn');
         const closeFooter = document.getElementById('modalCloseFooter');
         const closeModalFunc = () => modal.classList.remove('active');
-        closeBtn.addEventListener('click', closeModalFunc);
         closeFooter.addEventListener('click', closeModalFunc);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFunc(); });
+
+        // ========== THÊM MỚI: SỰ KIỆN CHO NÚT HIỂN THỊ/ẨN GIẢI THÍCH ==========
+        const explainPanel = document.getElementById('modalExplainPanel');
+        const showExplainBtn = document.getElementById('modalShowExplainBtn');
+        if (explainPanel && showExplainBtn) {
+            showExplainBtn.addEventListener('click', function() {
+                if (explainPanel.style.display === 'none') {
+                    explainPanel.style.display = 'block';
+                    showExplainBtn.textContent = '📖 ẨN BỚT';
+                    showExplainBtn.style.background = '#e67e22';
+                } else {
+                    explainPanel.style.display = 'none';
+                    showExplainBtn.textContent = '📖 HIỂN THỊ';
+                    showExplainBtn.style.background = '#f39c12';
+                }
+            });
+        }
     };
 })();
 </script>
