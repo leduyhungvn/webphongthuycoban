@@ -674,7 +674,7 @@
 
 <script>
 (function() {
-    // ==================== DỮ LIỆU GỐC ====================
+    // ==================== DỮ LIỆU GỐC (GIỮ NGUYÊN) ====================
     const STEMS = ["Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"];
     const BRANCHES = ["Tí", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
 
@@ -945,18 +945,18 @@
             }
         }
 
+        const total = menhDiem + thienCanDiem + diaChiDiem + cungDiem + niemDiem;
         return {
             menh: menhLabel,
             thienCan: thienCanRel,
             diaChi: diaChiRel,
             cung: cungRel,
             niem: niemLabel,
-            diem: menhDiem + thienCanDiem + diaChiDiem + cungDiem + niemDiem
+            diem: total
         };
     }
 
-    // ========== HÀM showCompareModal MỚI - DẠNG BẢNG ==========
-    // Chỉ thay đổi popup, giữ nguyên toàn bộ phần còn lại của trang
+    // ========== HIỂN THỊ POPUP DÙNG CHUNG DỮ LIỆU TỪ relation ==========
     function showCompareModal(me, partner, relation) {
         const modal = document.getElementById('compareModal');
         const modalBody = document.getElementById('modalBody');
@@ -975,136 +975,62 @@
         const partnerTrach = isPartnerEast ? 'Đông tứ trạch' : 'Tây tứ trạch';
         const cungTrach = (isMeEast === isPartnerEast) ? 'Cùng trạch' : 'Khác trạch';
 
-        // Tính điểm từng yếu tố (không bao gồm Bát trạch)
+        // Lấy điểm từ relation đã tính chuẩn
+        const tongDiem = relation.diem;
         let diemMenh = 0, diemThienCan = 0, diemDiaChi = 0, diemCung = 0, diemNiem = 0;
-        
         if (relation.menh.includes('TỐT TƯƠNG SINH')) diemMenh = 2;
         else if (relation.menh.includes('ỨNG TƯƠNG SINH')) diemMenh = 1.5;
         else if (relation.menh.includes('BÌNH')) diemMenh = 1;
         else if (relation.menh.includes('ỨNG TƯƠNG KHẮC')) diemMenh = 0.5;
         else if (relation.menh.includes('XẤU TƯƠNG KHẮC')) diemMenh = 0;
-        
-        if (relation.thienCan.includes('Hợp')) diemThienCan = 2;
+
+        if (relation.thienCan.includes('Hợp') || relation.thienCan.includes('Tương Sinh')) diemThienCan = 2;
         else if (relation.thienCan.includes('Bình')) diemThienCan = 1;
-        else if (relation.thienCan.includes('Xung') || relation.thienCan.includes('Khắc')) diemThienCan = 0;
-        else diemThienCan = 1;
-        
+        else diemThienCan = 0;
+
         if (relation.diaChi.includes('Lục hợp') || relation.diaChi.includes('Tam hợp')) diemDiaChi = 2;
         else if (relation.diaChi.includes('Bình')) diemDiaChi = 1;
         else diemDiaChi = 0;
-        
+
         if (relation.cung.includes('Sinh Khí') || relation.cung.includes('Phúc Đức') || relation.cung.includes('Thiên Y') || relation.cung.includes('Phục Vị')) diemCung = 2;
         else if (relation.cung.includes('Tuyệt Mạng') || relation.cung.includes('Ngũ Quỷ') || relation.cung.includes('Lục Sát') || relation.cung.includes('Hoạ Hại')) diemCung = 0;
         else diemCung = 1;
-        
+
         if (relation.niem.includes('TỐT TƯƠNG SINH')) diemNiem = 2;
         else if (relation.niem.includes('ỨNG TƯƠNG SINH')) diemNiem = 1.5;
         else if (relation.niem.includes('BÌNH')) diemNiem = 1;
         else if (relation.niem.includes('ỨNG TƯƠNG KHẮC')) diemNiem = 0.5;
         else if (relation.niem.includes('XẤU TƯƠNG KHẮC')) diemNiem = 0;
-        
-        const tongDiem = diemMenh + diemThienCan + diemDiaChi + diemCung + diemNiem;
-        
-        let xepLoai = '';
-        let danhGia = '';
-        if (tongDiem >= 8) {
-            xepLoai = '⭐ RẤT HỢP';
-            danhGia = 'Rất tốt cho hôn nhân, tình cảm và tài lộc.';
-        } else if (tongDiem >= 6) {
-            xepLoai = '✅ KHÁ HỢP';
-            danhGia = 'Tốt, có thể kết hợp với nhau.';
-        } else if (tongDiem >= 4) {
-            xepLoai = '⚠️ TRUNG BÌNH';
-            danhGia = 'Có thể chấp nhận được, cần hóa giải một số yếu tố.';
-        } else {
-            xepLoai = '❌ HẠN CHẾ';
-            danhGia = 'Nên xem xét kỹ trước khi kết hợp.';
-        }
 
-        const getBadge = (diem) => {
-            if (diem >= 1.5) return '<span class="badge-good">Tốt</span>';
-            if (diem >= 0.5) return '<span class="badge-normal">Bình</span>';
-            return '<span class="badge-bad">Xấu</span>';
-        };
+        let xepLoai = '', danhGia = '';
+        if (tongDiem >= 8) { xepLoai = '⭐ RẤT HỢP'; danhGia = 'Rất tốt cho hôn nhân, tình cảm và tài lộc.'; }
+        else if (tongDiem >= 6) { xepLoai = '✅ KHÁ HỢP'; danhGia = 'Tốt, có thể kết hợp với nhau.'; }
+        else if (tongDiem >= 4) { xepLoai = '⚠️ TRUNG BÌNH'; danhGia = 'Có thể chấp nhận được, cần hóa giải một số yếu tố.'; }
+        else { xepLoai = '❌ HẠN CHẾ'; danhGia = 'Nên xem xét kỹ trước khi kết hợp.'; }
 
-        const getQuanHeText = (rel, diem) => {
-            if (diem >= 1.5) return rel + ' ✓';
-            if (diem >= 0.5) return rel;
-            return rel + ' ✗';
-        };
+        const getBadge = (d) => d >= 1.5 ? '<span class="badge-good">Tốt</span>' : (d >= 0.5 ? '<span class="badge-normal">Bình</span>' : '<span class="badge-bad">Xấu</span>');
+        const getQuanHeText = (rel, d) => (d >= 1.5 ? rel + ' ✓' : (d >= 0.5 ? rel : rel + ' ✗'));
 
         const html = `
             <table class="compare-table">
-                <thead>
-                    <tr>
-                        <th>Yếu tố</th>
-                        <th>${gioiTinhMe}</th>
-                        <th>${gioiTinhPartner}</th>
-                        <th>Quan hệ</th>
-                        <th>Điểm</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Yếu tố</th><th>${gioiTinhMe}</th><th>${gioiTinhPartner}</th><th>Quan hệ</th><th>Điểm</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Mệnh nạp âm</strong></td>
-                        <td>${menhMe}</td>
-                        <td>${menhPartner}</td>
-                        <td>${getQuanHeText(relation.menh, diemMenh)}</td>
-                        <td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Thiên can</strong></td>
-                        <td>${me.stem} (${getAmDuong(me.stem)})</td>
-                        <td>${partner.stem} (${getAmDuong(partner.stem)})</td>
-                        <td>${getQuanHeText(relation.thienCan, diemThienCan)}</td>
-                        <td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Địa chi</strong></td>
-                        <td>${me.branch}</td>
-                        <td>${partner.branch}</td>
-                        <td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td>
-                        <td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cung phi</strong></td>
-                        <td>${me.cung} (${meTrach})</td>
-                        <td>${partner.cung} (${partnerTrach})</td>
-                        <td>${getQuanHeText(relation.cung, diemCung)}</td>
-                        <td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Niên mệnh</strong></td>
-                        <td>${me.niemMenh}</td>
-                        <td>${partner.niemMenh}</td>
-                        <td>${getQuanHeText(relation.niem, diemNiem)}</td>
-                        <td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bát trạch</strong></td>
-                        <td>${meTrach}</td>
-                        <td>${partnerTrach}</td>
-                        <td>${cungTrach}</td>
-                        <td style="color:#888;">—</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td><strong>🎯 Tổng kết</strong></td>
-                        <td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td>
-                        <td><strong>${tongDiem.toFixed(1)} / 10</strong></td>
-                    </tr>
+                    <tr><td><strong>Mệnh nạp âm</strong></td><td>${menhMe}</td><td>${menhPartner}</td><td>${getQuanHeText(relation.menh, diemMenh)}</td><td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td></tr>
+                    <tr><td><strong>Thiên can</strong></td><td>${me.stem} (${amDuongMe})</td><td>${partner.stem} (${amDuongPartner})</td><td>${getQuanHeText(relation.thienCan, diemThienCan)}</td><td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td></tr>
+                    <tr><td><strong>Địa chi</strong></td><td>${me.branch}</td><td>${partner.branch}</td><td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td><td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td></tr>
+                    <tr><td><strong>Cung phi</strong></td><td>${me.cung} (${meTrach})</td><td>${partner.cung} (${partnerTrach})</td><td>${getQuanHeText(relation.cung, diemCung)}</td><td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td></tr>
+                    <tr><td><strong>Niên mệnh</strong></td><td>${me.niemMenh}</td><td>${partner.niemMenh}</td><td>${getQuanHeText(relation.niem, diemNiem)}</td><td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td></tr>
+                    <tr><td><strong>Bát trạch</strong> (tham khảo)</td><td>${meTrach}</td><td>${partnerTrach}</td><td>${cungTrach}</td><td style="color:#888;">—</td></tr>
+                    <tr class="total-row"><td><strong>🎯 Tổng kết</strong></td><td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td><td><strong>${tongDiem.toFixed(1)} / 10</strong></td></tr>
                 </tbody>
             </table>
-            <div style="margin-top: 16px; padding: 12px; background: #e8f4f8; border-radius: 16px; text-align: center; font-size: 0.9rem;">
-                📝 ${danhGia}
-            </div>
+            <div style="margin-top:16px;padding:12px;background:#e8f4f8;border-radius:16px;text-align:center;">📝 ${danhGia}</div>
         `;
         modalBody.innerHTML = html;
         modal.classList.add('active');
     }
 
-    function closeModal() {
-        document.getElementById('compareModal').classList.remove('active');
-    }
+    function closeModal() { document.getElementById('compareModal').classList.remove('active'); }
 
     let currentMe = null;
     let currentRows = [];
@@ -1122,22 +1048,7 @@
         for (let y = start; y <= end; y++) {
             const partner = getPersonInfo(y, oppositeGender);
             const relation = tinhDiem(me, partner);
-            rows.push({
-                year: y,
-                menh: partner.menhName + " (" + partner.menhElem + ")",
-                menhRel: relation.menh,
-                thienCan: partner.stem,
-                thienCanRel: relation.thienCan,
-                diaChi: partner.branch,
-                diaChiRel: relation.diaChi,
-                cung: partner.cung,
-                cungRel: relation.cung,
-                niem: partner.niemMenh,
-                niemRel: relation.niem,
-                diem: relation.diem,
-                partnerObj: partner,
-                relation: relation
-            });
+            rows.push({ year: y, menh: partner.menhName + " (" + partner.menhElem + ")", menhRel: relation.menh, thienCan: partner.stem, thienCanRel: relation.thienCan, diaChi: partner.branch, diaChiRel: relation.diaChi, cung: partner.cung, cungRel: relation.cung, niem: partner.niemMenh, niemRel: relation.niem, diem: relation.diem, partnerObj: partner, relation: relation });
         }
         currentRows = rows;
 
@@ -1146,139 +1057,33 @@
             if (y === selectedYear) continue;
             const partner = getPersonInfo(y, selectedGender);
             const relation = tinhDiem(me, partner);
-            sameGenderRows.push({
-                year: y,
-                menh: partner.menhName + " (" + partner.menhElem + ")",
-                menhRel: relation.menh,
-                thienCan: partner.stem,
-                thienCanRel: relation.thienCan,
-                diaChi: partner.branch,
-                diaChiRel: relation.diaChi,
-                cung: partner.cung,
-                cungRel: relation.cung,
-                niem: partner.niemMenh,
-                niemRel: relation.niem,
-                diem: relation.diem,
-                partnerObj: partner,
-                relation: relation
-            });
+            sameGenderRows.push({ year: y, menh: partner.menhName + " (" + partner.menhElem + ")", menhRel: relation.menh, thienCan: partner.stem, thienCanRel: relation.thienCan, diaChi: partner.branch, diaChiRel: relation.diaChi, cung: partner.cung, cungRel: relation.cung, niem: partner.niemMenh, niemRel: relation.niem, diem: relation.diem, partnerObj: partner, relation: relation });
         }
         currentSameGenderRows = sameGenderRows;
 
         const personalDiv = document.getElementById('personalInfo');
         personalDiv.style.display = 'block';
         const loaiTrach = (me.cung === 'Khảm' || me.cung === 'Ly' || me.cung === 'Chấn' || me.cung === 'Tốn') ? 'Đông Tứ Trạch' : 'Tây Tứ Trạch';
-        personalDiv.innerHTML = `
-            <div class="info-row"><span class="info-label">Giới tính</span><span class="info-value">${selectedGender === 'male' ? 'Nam' : 'Nữ'}</span></div>
-            <div class="info-row"><span class="info-label">Năm âm lịch</span><span class="info-value">${me.stem} ${me.branch}</span></div>
-            <div class="info-row"><span class="info-label">Mệnh</span><span class="info-value">${me.menhName}</span></div>
-            <div class="info-row"><span class="info-label">Cung</span><span class="info-value">${me.cung} (${loaiTrach})</span></div>
-            <div class="info-row"><span class="info-label">Niên mệnh</span><span class="info-value">${me.niemMenh}</span></div>
-        `;
+        personalDiv.innerHTML = `<div class="info-row"><span class="info-label">Giới tính</span><span class="info-value">${selectedGender === 'male' ? 'Nam' : 'Nữ'}</span></div><div class="info-row"><span class="info-label">Năm âm lịch</span><span class="info-value">${me.stem} ${me.branch}</span></div><div class="info-row"><span class="info-label">Mệnh</span><span class="info-value">${me.menhName}</span></div><div class="info-row"><span class="info-label">Cung</span><span class="info-value">${me.cung} (${loaiTrach})</span></div><div class="info-row"><span class="info-label">Niên mệnh</span><span class="info-value">${me.niemMenh}</span></div>`;
 
         const { tot, xau } = getDirections(me.cung);
-        const huongTotDiv = document.getElementById('huongTot');
-        const huongXauDiv = document.getElementById('huongXau');
-        huongTotDiv.style.display = 'block';
-        huongXauDiv.style.display = 'block';
-
-        let totHtml = `<div class="huong-title">✅ Hướng tốt (${loaiTrach})</div><ul class="huong-list">`;
-        tot.forEach(item => {
-            totHtml += `<li class="huong-item"><strong>${item.tenQH}:</strong> ${item.huong} <span class="badge-huong">${item.moTa}</span></li>`;
-        });
-        totHtml += `</ul>`;
-        huongTotDiv.innerHTML = totHtml;
-
-        let xauHtml = `<div class="huong-title">❌ Hướng xấu</div><ul class="huong-list">`;
-        xau.forEach(item => {
-            xauHtml += `<li class="huong-item"><strong>${item.tenQH}:</strong> ${item.huong} <span class="badge-huong">${item.moTa}</span></li>`;
-        });
-        xauHtml += `</ul>`;
-        huongXauDiv.innerHTML = xauHtml;
+        document.getElementById('huongTot').style.display = 'block';
+        document.getElementById('huongXau').style.display = 'block';
+        document.getElementById('huongTot').innerHTML = `<div class="huong-title">✅ Hướng tốt (${loaiTrach})</div><ul class="huong-list">${tot.map(item => `<li class="huong-item"><strong>${item.tenQH}:</strong> ${item.huong} <span class="badge-huong">${item.moTa}</span></li>`).join('')}</ul>`;
+        document.getElementById('huongXau').innerHTML = `<div class="huong-title">❌ Hướng xấu</div><ul class="huong-list">${xau.map(item => `<li class="huong-item"><strong>${item.tenQH}:</strong> ${item.huong} <span class="badge-huong">${item.moTa}</span></li>`).join('')}</ul>`;
 
         const sorted = [...rows].sort((a,b) => b.diem - a.diem).slice(0,20);
-        const topDiv = document.getElementById('top20Container');
-        topDiv.style.display = 'block';
-        let topHtml = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div>`;
-        topHtml += `<table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>`;
-        sorted.forEach(item => {
-            topHtml += `<tr>
-                <td>${item.year}</td>
-                <td>${oppositeGender === 'male' ? 'Nam' : 'Nữ'}</td>
-                <td>${item.menh}</td>
-                <td>${item.cung}</td>
-                <td><b>${item.diem.toFixed(1)}</b></td>
-            </tr>`;
-        });
-        topHtml += `</table>`;
-        topDiv.innerHTML = topHtml;
+        document.getElementById('top20Container').style.display = 'block';
+        document.getElementById('top20Container').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>${sorted.map(item => `<tr><td>${item.year}</td><td>${oppositeGender === 'male' ? 'Nam' : 'Nữ'}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</table>`;
 
-        let html1 = `<table><thead><tr>`;
-        html1 += `<th>Năm<br>đối phương</th><th>Mệnh</th><th>QHệ<br>Mệnh</th><th>Thiên can</th><th>QHệ<br>Thiên can</th><th>Địa chi</th><th>QHệ<br>Địa chi</th><th>Cung</th><th>QHệ<br>Cung</th><th>Niên mệnh</th><th>QHệ<br>Niên</th><th>Điểm</th><th>Thao tác</th>`;
-        html1 += `</tr></thead><tbody>`;
-
-        rows.forEach((r, index) => {
-            html1 += `<tr data-index="${index}">`;
-            html1 += `<td>${r.year}</td>`;
-            html1 += `<td>${r.menh}</td>`;
-            html1 += `<td>${r.menhRel}</td>`;
-            html1 += `<td>${r.thienCan}</td>`;
-            html1 += `<td>${r.thienCanRel}</td>`;
-            html1 += `<td>${r.diaChi}</td>`;
-            html1 += `<td>${r.diaChiRel}</td>`;
-            html1 += `<td>${r.cung}</td>`;
-            html1 += `<td>${r.cungRel}</td>`;
-            html1 += `<td>${r.niem}</td>`;
-            html1 += `<td>${r.niemRel}</td>`;
-            html1 += `<td><b>${r.diem.toFixed(1)}</b></td>`;
-            html1 += `<td><button class="btn-compare" data-index="${index}" data-table="diff">🔍 So sánh</button></td>`;
-            html1 += `</tr>`;
-        });
-        html1 += `</tbody></table>`;
-        document.getElementById('diffGenderTable').innerHTML = html1;
+        const buildTableHtml = (data) => `<table><thead><tr><th>Năm<br>đối phương</th><th>Mệnh</th><th>QHệ<br>Mệnh</th><th>Thiên can</th><th>QHệ<br>Thiên can</th><th>Địa chi</th><th>QHệ<br>Địa chi</th><th>Cung</th><th>QHệ<br>Cung</th><th>Niên mệnh</th><th>QHệ<br>Niên</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody>${data.map((r, idx) => `<tr><td>${r.year}</td><td>${r.menh}</td><td>${r.menhRel}</td><td>${r.thienCan}</td><td>${r.thienCanRel}</td><td>${r.diaChi}</td><td>${r.diaChiRel}</td><td>${r.cung}</td><td>${r.cungRel}</td><td>${r.niem}</td><td>${r.niemRel}</td><td><b>${r.diem.toFixed(1)}</b></td><td><button class="btn-compare" data-idx="${idx}" data-table="diff">🔍 So sánh</button></td></tr>`).join('')}</tbody></table>`;
+        document.getElementById('diffGenderTable').innerHTML = buildTableHtml(rows);
+        document.getElementById('sameGenderTable').innerHTML = buildTableHtml(sameGenderRows);
+        document.getElementById('sameGenderTitle').innerText = `📋 Danh sách cùng giới (${selectedGender === 'male' ? 'Nam-Nam' : 'Nữ-Nữ'})`;
 
         const sortedSame = [...sameGenderRows].sort((a,b) => b.diem - a.diem).slice(0,20);
-        const topSameDiv = document.getElementById('top20SameGenderContainer');
-        topSameDiv.style.display = 'block';
-        let topSameHtml = `<div class="top20-title">🔟 Top 20 đối phương cùng giới hợp nhất (điểm cao nhất)</div>`;
-        topSameHtml += `<table class="top20-table"><tr><th>Năm</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>`;
-        sortedSame.forEach(item => {
-            topSameHtml += `<tr>
-                <td>${item.year}</td>
-                <td>${item.menh}</td>
-                <td>${item.cung}</td>
-                <td><b>${item.diem.toFixed(1)}</b></td>
-            </tr>`;
-        });
-        topSameHtml += `</table>`;
-        topSameDiv.innerHTML = topSameHtml;
-
-        const sameGenderTitle = document.getElementById('sameGenderTitle');
-        sameGenderTitle.innerText = `📋 Danh sách cùng giới (${selectedGender === 'male' ? 'Nam-Nam' : 'Nữ-Nữ'})`;
-
-        let html2 = `<table><thead><tr>`;
-        html2 += `<th>Năm<br>đối phương</th><th>Mệnh</th><th>QHệ<br>Mệnh</th><th>Thiên can</th><th>QHệ<br>Thiên can</th><th>Địa chi</th><th>QHệ<br>Địa chi</th><th>Cung</th><th>QHệ<br>Cung</th><th>Niên mệnh</th><th>QHệ<br>Niên</th><th>Điểm</th><th>Thao tác</th>`;
-        html2 += `</tr></thead><tbody>`;
-
-        sameGenderRows.forEach((r, index) => {
-            html2 += `<tr data-index="${index}">`;
-            html2 += `<td>${r.year}</td>`;
-            html2 += `<td>${r.menh}</td>`;
-            html2 += `<td>${r.menhRel}</td>`;
-            html2 += `<td>${r.thienCan}</td>`;
-            html2 += `<td>${r.thienCanRel}</td>`;
-            html2 += `<td>${r.diaChi}</td>`;
-            html2 += `<td>${r.diaChiRel}</td>`;
-            html2 += `<td>${r.cung}</td>`;
-            html2 += `<td>${r.cungRel}</td>`;
-            html2 += `<td>${r.niem}</td>`;
-            html2 += `<td>${r.niemRel}</td>`;
-            html2 += `<td><b>${r.diem.toFixed(1)}</b></td>`;
-            html2 += `<td><button class="btn-compare" data-index="${index}" data-table="same">🔍 So sánh</button></td>`;
-            html2 += `</tr>`;
-        });
-        html2 += `</tbody></table>`;
-        document.getElementById('sameGenderTable').innerHTML = html2;
+        document.getElementById('top20SameGenderContainer').style.display = 'block';
+        document.getElementById('top20SameGenderContainer').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương cùng giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><tr><th>Năm</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>${sortedSame.map(item => `<tr><td>${item.year}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</table>`;
 
         let summaryRows = [];
         for (let y = start; y <= end; y++) {
@@ -1288,125 +1093,47 @@
             const relationNu = tinhDiem(me, nu);
             const namTrach = (nam.cung === 'Khảm' || nam.cung === 'Ly' || nam.cung === 'Chấn' || nam.cung === 'Tốn') ? 'Đông' : 'Tây';
             const nuTrach = (nu.cung === 'Khảm' || nu.cung === 'Ly' || nu.cung === 'Chấn' || nu.cung === 'Tốn') ? 'Đông' : 'Tây';
-            summaryRows.push({
-                year: y,
-                namTrach,
-                namDiem: relationNam.diem,
-                nuDiem: relationNu.diem,
-                nuTrach
-            });
+            summaryRows.push({ year: y, namTrach, namDiem: relationNam.diem, nuDiem: relationNu.diem, nuTrach });
         }
-
-        let html3 = `<table><thead><tr>`;
-        html3 += `<th>Bát trạch Nam</th><th>Điểm Nam</th><th>Năm</th><th>Điểm Nữ</th><th>Bát trạch Nữ</th>`;
-        html3 += `</tr></thead><tbody>`;
-
-        summaryRows.forEach(item => {
-            html3 += `<tr>`;
-            html3 += `<td>${item.namTrach}</td>`;
-            html3 += `<td><b>${item.namDiem.toFixed(1)}</b></td>`;
-            html3 += `<td>${item.year}</td>`;
-            html3 += `<td><b>${item.nuDiem.toFixed(1)}</b></td>`;
-            html3 += `<td>${item.nuTrach}</td>`;
-            html3 += `</tr>`;
-        });
-        html3 += `</tbody></table>`;
-        document.getElementById('summaryTable').innerHTML = html3;
+        document.getElementById('summaryTable').innerHTML = `<table><thead><tr><th>Bát trạch Nam</th><th>Điểm Nam</th><th>Năm</th><th>Điểm Nữ</th><th>Bát trạch Nữ</th></tr></thead><tbody>${summaryRows.map(item => `<tr><td>${item.namTrach}</td><td><b>${item.namDiem.toFixed(1)}</b></td><td>${item.year}</td><td><b>${item.nuDiem.toFixed(1)}</b></td><td>${item.nuTrach}</td></tr>`).join('')}</tbody></table>`;
 
         document.getElementById('diffGenderWrapper').style.display = 'block';
         document.getElementById('sameGenderWrapper').style.display = 'block';
         document.getElementById('summaryWrapper').style.display = 'block';
-
-        const diffTable = document.getElementById('diffGenderTable');
-        const sameTable = document.getElementById('sameGenderTable');
-        const sumTable = document.getElementById('summaryTable');
-        diffTable.classList.add('collapsed');
-        sameTable.classList.add('collapsed');
-        sumTable.classList.add('collapsed');
-        
+        document.querySelectorAll('.scrollable').forEach(el => el.classList.add('collapsed'));
         document.querySelectorAll('.toggle-btn').forEach(btn => {
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            newBtn.addEventListener('click', function(e) {
+            newBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const targetId = this.getAttribute('data-target');
-                const target = document.getElementById(targetId);
-                if (target) {
-                    if (target.classList.contains('collapsed')) {
-                        target.classList.remove('collapsed');
-                        this.textContent = 'Thu lại';
-                    } else {
-                        target.classList.add('collapsed');
-                        this.textContent = 'Mở rộng';
-                    }
-                }
+                const target = document.getElementById(newBtn.getAttribute('data-target'));
+                if (target.classList.contains('collapsed')) { target.classList.remove('collapsed'); newBtn.textContent = 'Thu lại'; }
+                else { target.classList.add('collapsed'); newBtn.textContent = 'Mở rộng'; }
             });
         });
-
-        document.querySelectorAll('#diffGenderTable .btn-compare').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const index = btn.getAttribute('data-index');
-                if (index !== null) {
-                    const rowData = currentRows[parseInt(index)];
-                    showCompareModal(currentMe, rowData.partnerObj, rowData.relation);
-                }
-            });
-        });
-
-        document.querySelectorAll('#sameGenderTable .btn-compare').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const index = btn.getAttribute('data-index');
-                if (index !== null) {
-                    const rowData = currentSameGenderRows[parseInt(index)];
-                    showCompareModal(currentMe, rowData.partnerObj, rowData.relation);
-                }
-            });
-        });
+        document.querySelectorAll('#diffGenderTable .btn-compare').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.getAttribute('data-idx')); if (!isNaN(idx)) showCompareModal(currentMe, currentRows[idx].partnerObj, currentRows[idx].relation); }));
+        document.querySelectorAll('#sameGenderTable .btn-compare').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.getAttribute('data-idx')); if (!isNaN(idx)) showCompareModal(currentMe, currentSameGenderRows[idx].partnerObj, currentSameGenderRows[idx].relation); }));
     }
 
     function populateYearSelect() {
         const select = document.getElementById('yearSelect');
-        for (let y = 1945; y <= 2145; y++) {
-            let option = document.createElement('option');
-            option.value = y;
-            option.textContent = y;
-            select.appendChild(option);
-        }
+        for (let y = 1945; y <= 2145; y++) { let option = document.createElement('option'); option.value = y; option.textContent = y; select.appendChild(option); }
         select.value = 1985;
     }
 
     window.onload = function() {
         populateYearSelect();
-        document.getElementById('xemBtn').addEventListener('click', function() {
-            const year = parseInt(document.getElementById('yearSelect').value);
-            const gender = document.getElementById('genderSelect').value;
-            renderTable(year, gender);
-        });
+        document.getElementById('xemBtn').addEventListener('click', () => renderTable(parseInt(document.getElementById('yearSelect').value), document.getElementById('genderSelect').value));
         renderTable(1985, 'female');
-
         const modal = document.getElementById('compareModal');
-        const closeFooter = document.getElementById('modalCloseFooter');
-        const closeModalFunc = () => modal.classList.remove('active');
-        closeFooter.addEventListener('click', closeModalFunc);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFunc(); });
-
+        document.getElementById('modalCloseFooter').addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
         const explainPanel = document.getElementById('modalExplainPanel');
         const showExplainBtn = document.getElementById('modalShowExplainBtn');
-        if (explainPanel && showExplainBtn) {
-            showExplainBtn.addEventListener('click', function() {
-                if (explainPanel.style.display === 'none') {
-                    explainPanel.style.display = 'block';
-                    showExplainBtn.textContent = '📖 ẨN BỚT';
-                    showExplainBtn.style.background = '#e67e22';
-                } else {
-                    explainPanel.style.display = 'none';
-                    showExplainBtn.textContent = '📖 HIỂN THỊ';
-                    showExplainBtn.style.background = '#f39c12';
-                }
-            });
-        }
+        showExplainBtn.addEventListener('click', () => {
+            if (explainPanel.style.display === 'none') { explainPanel.style.display = 'block'; showExplainBtn.textContent = '📖 ẨN BỚT'; showExplainBtn.style.background = '#e67e22'; }
+            else { explainPanel.style.display = 'none'; showExplainBtn.textContent = '📖 HIỂN THỊ'; showExplainBtn.style.background = '#f39c12'; }
+        });
     };
 })();
 </script>
