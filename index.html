@@ -956,7 +956,7 @@
         };
     }
 
-    // ========== HIỂN THỊ POPUP DÙNG CHUNG DỮ LIỆU TỪ relation ==========
+    // ========== HIỂN THỊ POPUP - ĐÃ THÊM NĂM SINH VÀ CAN CHI ==========
     function showCompareModal(me, partner, relation) {
         const modal = document.getElementById('compareModal');
         const modalBody = document.getElementById('modalBody');
@@ -1011,17 +1011,76 @@
         const getBadge = (d) => d >= 1.5 ? '<span class="badge-good">Tốt</span>' : (d >= 0.5 ? '<span class="badge-normal">Bình</span>' : '<span class="badge-bad">Xấu</span>');
         const getQuanHeText = (rel, d) => (d >= 1.5 ? rel + ' ✓' : (d >= 0.5 ? rel : rel + ' ✗'));
 
+        // --- BỔ SUNG: Hiển thị năm sinh và năm âm lịch (Can Chi) ---
+        const meYearInfo = `<strong style="font-size:1.05rem;">${me.year} (${me.stem} ${me.branch})</strong>`;
+        const partnerYearInfo = `<strong style="font-size:1.05rem;">${partner.year} (${partner.stem} ${partner.branch})</strong>`;
+        // -----------------------------------------------------------
+
         const html = `
             <table class="compare-table">
-                <thead><tr><th>Yếu tố</th><th>${gioiTinhMe}</th><th>${gioiTinhPartner}</th><th>Quan hệ</th><th>Điểm</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>Yếu tố</th>
+                        <th>${gioiTinhMe} (Chính chủ)</th>
+                        <th>${gioiTinhPartner} (Đối phương)</th>
+                        <th>Quan hệ</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td><strong>Mệnh nạp âm</strong></td><td>${menhMe}</td><td>${menhPartner}</td><td>${getQuanHeText(relation.menh, diemMenh)}</td><td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td></tr>
-                    <tr><td><strong>Thiên can</strong></td><td>${me.stem} (${amDuongMe})</td><td>${partner.stem} (${amDuongPartner})</td><td>${getQuanHeText(relation.thienCan, diemThienCan)}</td><td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td></tr>
-                    <tr><td><strong>Địa chi</strong></td><td>${me.branch}</td><td>${partner.branch}</td><td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td><td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td></tr>
-                    <tr><td><strong>Cung phi</strong></td><td>${me.cung} (${meTrach})</td><td>${partner.cung} (${partnerTrach})</td><td>${getQuanHeText(relation.cung, diemCung)}</td><td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td></tr>
-                    <tr><td><strong>Niên mệnh</strong></td><td>${me.niemMenh}</td><td>${partner.niemMenh}</td><td>${getQuanHeText(relation.niem, diemNiem)}</td><td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td></tr>
-                    <tr><td><strong>Bát trạch</strong> (tham khảo)</td><td>${meTrach}</td><td>${partnerTrach}</td><td>${cungTrach}</td><td style="color:#888;">—</td></tr>
-                    <tr class="total-row"><td><strong>🎯 Tổng kết</strong></td><td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td><td><strong>${tongDiem.toFixed(1)} / 10</strong></td></tr>
+                    <!-- DÒNG NĂM SINH MỚI ĐƯỢC THÊM VÀO -->
+                    <tr style="background-color: #f0f7ff;">
+                        <td><strong>📅 Năm sinh & Can Chi</strong></td>
+                        <td colspan="2"><div style="display: flex; justify-content: space-between; align-items: center;">${meYearInfo}<span style="font-size:1.5rem; color:#0d6efd;"> ⇄ </span>${partnerYearInfo}</div></td>
+                        <td colspan="2" style="text-align: center;">—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mệnh nạp âm</strong></td>
+                        <td>${menhMe}</td>
+                        <td>${menhPartner}</td>
+                        <td>${getQuanHeText(relation.menh, diemMenh)}</td>
+                        <td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thiên can</strong></td>
+                        <td>${me.stem} (${amDuongMe})</td>
+                        <td>${partner.stem} (${amDuongPartner})</td>
+                        <td>${getQuanHeText(relation.thienCan, diemThienCan)}</td>
+                        <td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Địa chi</strong></td>
+                        <td>${me.branch}</td>
+                        <td>${partner.branch}</td>
+                        <td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td>
+                        <td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cung phi</strong></td>
+                        <td>${me.cung} (${meTrach})</td>
+                        <td>${partner.cung} (${partnerTrach})</td>
+                        <td>${getQuanHeText(relation.cung, diemCung)}</td>
+                        <td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Niên mệnh</strong></td>
+                        <td>${me.niemMenh}</td>
+                        <td>${partner.niemMenh}</td>
+                        <td>${getQuanHeText(relation.niem, diemNiem)}</td>
+                        <td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bát trạch</strong> (tham khảo)</td>
+                        <td>${meTrach}</td>
+                        <td>${partnerTrach}</td>
+                        <td>${cungTrach}</td>
+                        <td style="color:#888;">—</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>🎯 Tổng kết</strong></td>
+                        <td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td>
+                        <td><strong>${tongDiem.toFixed(1)} / 10</strong></td>
+                    </tr>
                 </tbody>
             </table>
             <div style="margin-top:16px;padding:12px;background:#e8f4f8;border-radius:16px;text-align:center;">📝 ${danhGia}</div>
