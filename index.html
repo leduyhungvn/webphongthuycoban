@@ -203,16 +203,15 @@
             border-radius: 16px;
             overflow: hidden;
         }
-        .top20-table th {
-            background: #f39c12;
-            color: #1e2b3a;
-            padding: 12px 8px;
-            font-weight: 600;
-        }
-        .top20-table td, .top20-table th {
+        .top20-table th, .top20-table td {
             border: 1px solid #e6b422;
             padding: 10px 8px;
             text-align: center;
+        }
+        .top20-table th {
+            background: #f39c12;
+            color: #1e2b3a;
+            font-weight: 600;
         }
         .top20-table tr:nth-child(even) {
             background: #fef9e7;
@@ -222,6 +221,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 18px;
             background: #fafafa;
+            overflow: hidden;
         }
         .table-header {
             display: flex;
@@ -264,13 +264,18 @@
             overflow: hidden;
             border-top: none;
         }
-        table {
-            border-collapse: collapse;
+        .scrollable table {
             width: 100%;
+            border-collapse: collapse;
             font-size: 0.85rem;
             background: white;
         }
-        th {
+        .scrollable th, .scrollable td {
+            border: 1px solid #bdc9d5;
+            padding: 10px 5px;
+            text-align: center;
+        }
+        .scrollable th {
             background: #1e2b3a;
             color: white;
             padding: 14px 6px;
@@ -280,12 +285,7 @@
             z-index: 10;
             white-space: nowrap;
         }
-        td {
-            padding: 10px 5px;
-            border: 1px solid #bdc9d5;
-            text-align: center;
-        }
-        tr:nth-child(even) {
+        .scrollable tr:nth-child(even) {
             background: #f2f6f9;
         }
         .btn-compare {
@@ -386,7 +386,6 @@
         .badge-normal { background: #fff3cd; color: #856404; }
         .badge-bad { background: #f8d7da; color: #721c24; }
 
-        /* Bảng trong popup */
         .compare-table {
             width: 100%;
             border-collapse: collapse;
@@ -395,30 +394,20 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
+        .compare-table th, .compare-table td {
+            border: 1px solid #cbd5e0;
+            padding: 12px 10px;
+            vertical-align: middle;
+        }
         .compare-table th {
             background: #f1f5f9;
             color: #1e2b3a;
-            padding: 14px 10px;
-            text-align: center;
             font-weight: 600;
-            border-bottom: 2px solid #cbd5e0;
-        }
-        .compare-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
-        .compare-table tr:last-child td {
-            border-bottom: none;
         }
         .total-row {
             background: #fef9e7;
             font-weight: bold;
         }
-        .total-row td {
-            border-top: 2px solid #f1c40f;
-        }
-
         .explain-box, .direction-detail, .explain-diff {
             background: #eef2f7;
             border-radius: 26px;
@@ -460,7 +449,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>HỢP TUỔI NAM - NỮ (1945–2145) – BÁT TRẠCH HƯỚNG NHÀ</h1>
+    <h1>Tra cứu hợp tuổi vợ chồng + Bát trạch hướng nhà</h1>
     
     <div class="form-group">
         <div class="form-item">
@@ -526,155 +515,179 @@
         </div>
     </div>
 
-    <!-- ========== PHẦN GIẢI THÍCH: GIỮ NGUYÊN 100% ========== -->
-    <div class="explain-box">
-        <h3>Cách tính điểm hợp tuổi (thang 10) – chi tiết</h3>
-        <ul>
-            <li><strong>Quan hệ đối xứng (Thiên can, Địa chi, Cung mệnh):</strong>
-                <ul>
-                    <li>2 điểm: hợp (can hợp, lục hợp, tam hợp, cung tốt).</li>
-                    <li>1 điểm: bình (không hợp không xung).</li>
-                    <li>0 điểm: xung khắc (can xung, lục xung, lục phá, lục hại, tam hình, cung xấu).</li>
-                </ul>
-            </li>
-            <li><strong>Quan hệ một chiều (Mệnh nạp âm và Niên mệnh – hành cung):</strong> Kết quả phụ thuộc vào chiều tương sinh khắc giữa hai người.
-                <ul>
-                    <li>2 điểm: <strong>Đối phương sinh chính chủ</strong> = TỐT TƯƠNG SINH (Tốt).</li>
-                    <li>1.5 điểm: <strong>Chính chủ sinh đối phương</strong> = ỨNG TƯƠNG SINH (Tốt).</li>
-                    <li>1 điểm: <strong>Bình hòa</strong> (không sinh, không khắc) = BÌNH (Bình).</li>
-                    <li>0.5 điểm: <strong>Chính chủ khắc đối phương</strong> = ỨNG TƯƠNG KHẮC (Xấu).</li>
-                    <li>0 điểm: <strong>Đối phương khắc chính chủ</strong> = XẤU TƯƠNG KHẮC (Xấu).</li>
-                </ul>
-            </li>
-        </ul>
-        <div class="example">
-            <strong>Ví dụ:</strong> Bạn là Nam 1985 (mệnh Kim, niên mệnh Kim), đối phương Nữ 1996 (mệnh Thủy, niên mệnh Thổ).<br>
-            - Mệnh: đối phương Thủy không sinh, không khắc Kim → BÌNH (1 điểm).<br>
-            - Niên mệnh: đối phương Thổ sinh bạn Kim → TỐT TƯƠNG SINH (2 điểm).<br>
-            Tổng điểm các mục khác cộng lại sẽ phản ánh mức độ hợp.
-        </div>
-        <p class="note">Tổng điểm tối đa 10. Các cặp đạt 8–10 điểm được xem là rất hợp.</p>
+<!-- ========== PHẦN LÝ THUYẾT HOÀN CHỈNH (GIỮ NGUYÊN) ========== -->
+
+<!-- KHUNG CẢNH BÁO QUAN TRỌNG NHẤT -->
+<div style="background:#fff3cd; border-left:6px solid #f1c40f; padding:12px 18px; margin:20px 0; border-radius:16px; font-size:0.95rem;">
+    🔁 <strong>LƯU Ý QUAN TRỌNG VỀ CÁCH TÍNH ĐIỂM:</strong>
+    <ul style="margin:8px 0 0 20px; padding:0;">
+        <li><strong>Thiên can:</strong> KHÔNG đối xứng – kết quả có thể khác nhau khi đổi vai trò chính chủ (do xét ngũ hành theo thứ tự).</li>
+        <li><strong>Địa chi & Cung phi:</strong> Đối xứng – kết quả giống nhau khi đổi vai trò.</li>
+        <li><strong>Mệnh nạp âm & Niên mệnh:</strong> Một chiều – phụ thuộc vào “ai sinh/khắc ai” so với chính chủ.</li>
+        <li>Do đó, <strong>cùng một cặp nam – nữ nhưng khi đổi chính chủ sẽ cho ra tổng điểm khác nhau</strong> – đó là đúng bản chất phong thủy.</li>
+    </ul>
+</div>
+
+<!-- 1. BẢNG CÔNG BỐ CÁCH TÍNH ĐIỂM CHI TIẾT -->
+<div class="explain-box" style="background:#f4f9ff; border-radius:28px; padding:24px 28px; margin-top:20px;">
+    <h3 style="margin-top:0;">📐 Cách tính điểm hợp tuổi (thang 10) – chi tiết</h3>
+    
+    <!-- ========== THIÊN CAN ========== -->
+    <h4>1. Thiên can</h4>
+    <p><em>⚠️ KHÔNG đối xứng – kết quả phụ thuộc vào thứ tự (ai đứng trước).</em></p>
+    <p><strong>Thứ tự ưu tiên: Lục hợp → Lục xung → Ngũ hành 1 chiều</strong></p>
+    <table style="width:100%; border-collapse:collapse; background:white; border-radius:16px; overflow:hidden; margin:12px 0; font-size:0.85rem;">
+        <thead>
+            <tr style="background:#1e2b3a; color:white;">
+                <th style="padding:10px; border:1px solid #2c3e50;">Thứ tự</th>
+                <th style="padding:10px; border:1px solid #2c3e50;">Loại</th>
+                <th style="padding:10px; border:1px solid #2c3e50;">Điều kiện</th>
+                <th style="padding:10px; border:1px solid #2c3e50;">Điểm</th>
+                <th style="padding:10px; border:1px solid #2c3e50;">Ví dụ (chính chủ - đối phương)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background:#e8f5e9;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1</strong></td><td style="border:1px solid #bdc9d5;"><strong>Lục hợp</strong></td><td style="border:1px solid #bdc9d5;">Giáp–Kỷ, Ất–Canh, Bính–Tân, Đinh–Nhâm, Mậu–Quý</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Ất + Canh = 2 điểm (dù Mộc khắc Kim vẫn 2)</td></tr>
+            <tr style="background:#ffebee;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2</strong></td><td style="border:1px solid #bdc9d5;"><strong>Lục xung</strong></td><td style="border:1px solid #bdc9d5;">Giáp–Canh, Ất–Tân, Bính–Nhâm, Đinh–Quý, Mậu–Kỷ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Ất + Tân = 0 điểm</td></tr>
+            <tr style="background:#c8e6c9;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>3</strong></td><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Đối phương sinh chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Thủy → 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>4</strong></td><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ sinh đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Hỏa, đối phương Thổ → 1.5 điểm</td></tr>
+            <tr style="background:#fff9c4;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>5</strong></td><td style="border:1px solid #bdc9d5;"><strong>BÌNH</strong></td><td style="border:1px solid #bdc9d5;">Không sinh, không khắc (cùng hành)</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Mộc → 1 điểm</td></tr>
+            <tr style="background:#ffe0b2;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>6</strong></td><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ khắc đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Kim, đối phương Mộc → 0.5 điểm</td></tr>
+            <tr style="background:#ffcdd2;"><td style="text-align:center; border:1px solid #bdc9d5;"><strong>7</strong></td><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Đối phương khắc chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Kim → 0 điểm</td></tr>
+        </tbody>
+    </table>
+    <div style="background:#e3f2fd; border-radius:16px; padding:12px; margin:12px 0;">
+        <strong>📌 Bảng ngũ hành của 10 can:</strong><br>
+        Giáp (Mộc Dương) – Ất (Mộc Âm) | Bính (Hỏa Dương) – Đinh (Hỏa Âm) | Mậu (Thổ Dương) – Kỷ (Thổ Âm) | Canh (Kim Dương) – Tân (Kim Âm) | Nhâm (Thủy Dương) – Quý (Thủy Âm)
+    </div>
+    <div style="background:#fff3e0; border-radius:16px; padding:12px; margin:12px 0;">
+        <strong>📌 Vòng tương sinh - tương khắc ngũ hành:</strong><br>
+        🔥 Hỏa sinh Thổ → Thổ sinh Kim → Kim sinh Thủy → Thủy sinh Mộc → Mộc sinh Hỏa<br>
+        🔥 Hỏa khắc Kim → Kim khắc Mộc → Mộc khắc Thổ → Thổ khắc Thủy → Thủy khắc Hỏa
     </div>
 
-    <div class="direction-detail">
-        <h3>🟢 NHÓM HƯỚNG TỐT (CÁT HƯỚNG)</h3>
-        <p>Đây là những hướng đón nhận các luồng khí tốt lành (Sinh Khí) từ vũ trụ, giúp gia chủ gặp may mắn, thuận lợi trong công việc và cuộc sống.</p>
-        <h4>1. Sinh Khí - Hướng "Đại Cát"</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Sinh" là sinh sôi, "Khí" là năng lượng. Đây là nguồn năng lượng mạnh mẽ nhất, tượng trưng cho sự khởi đầu thuận lợi và phát triển.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Tài lộc:</strong> Đây là hướng vượng tài vượng lộc nhất. Nếu làm nhà, kê bàn làm việc hoặc chọn hướng phòng ngủ theo hướng này, công việc kinh doanh, sự nghiệp sẽ hanh thông, tiền bạc dồi dào, có cơ hội thăng quan tiến chức.</li>
-            <li><strong>Sức khỏe:</strong> Năng lượng Sinh Khí dồi dào giúp cơ thể tràn đầy sức sống, ít bệnh vặt, tinh thần phấn chấn.</li>
-            <li><strong>Gia đạo:</strong> Rất vượng về người (con cháu đề huề, đông vui), các mối quan hệ xã hội được mở rộng, gặp được nhiều quý nhân phù trợ.</li>
-        </ul>
-        <h4>2. Phúc Đức (Diên Niên) - Hướng "Đại Cát"</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Diên Niên" nghĩa là kéo dài tuổi thọ, sự hòa thuận. "Phúc Đức" là phúc phần tổ tiên để lại.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Gia đạo:</strong> Đây là hướng của tình yêu thương và sự hòa hợp. Rất tốt cho hôn nhân, giúp vợ chồng thêm gắn bó, yêu thương nhau, hạn chế cãi vã. Các thành viên trong nhà sống hòa thuận, êm ấm.</li>
-            <li><strong>Tài lộc:</strong> Tài vận rất tốt, tiền bạc đến một cách ổn định, bền vững, không phải tài lộc nhất thời.</li>
-            <li><strong>Sức khỏe:</strong> Sống lâu, khỏe mạnh, ít bệnh tật nhờ sự ổn định của nguồn năng lượng.</li>
-        </ul>
-        <h4>3. Thiên Y - Hướng "Cát"</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Thiên" là trời, "Y" là thuốc chữa bệnh. Có nghĩa là được trời ban cho sức khỏe và sự che chở.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Sức khỏe:</strong> Nổi bật nhất là khả năng hóa giải bệnh tật. Nhà có hướng hoặc phòng ngủ/bếp ở hướng Thiên Y sẽ giúp người ốm mau khỏi, người khỏe càng thêm dẻo dai.</li>
-            <li><strong>Tài lộc:</strong> Tài vận cũng tốt, có quý nhân giúp đỡ, tiền bạc có phần nhẹ nhàng, không quá vất vả.</li>
-            <li><strong>Năng lượng:</strong> Mang đến sự an yên, che chở, giúp gia chủ vượt qua khó khăn về bệnh tật.</li>
-        </ul>
-        <h4>4. Phục Vị - Hướng "Bình Cát" (Tiểu Cát)</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Phục" là quay về, "Vị" là vị trí. Tượng trưng cho sự tĩnh tâm, ổn định và nương tựa vào chính mình.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Tinh thần:</strong> Tốt cho việc tu tập, học hành, nghiên cứu hoặc những người làm công việc tư duy. Nó củng cố ý chí và sự kiên định.</li>
-            <li><strong>Tài lộc:</strong> Ở mức trung bình, khá ổn định, ít biến động lớn. Không phải là hướng để cầu mong sự giàu có vượt bậc.</li>
-            <li><strong>Sức khỏe & Gia vận:</strong> Mọi thứ ở mức ổn định, không xấu nhưng cũng không có gì đột phá. Đây là nguồn năng lượng hỗ trợ cho sự vững chắc hơn là sự phát triển.</li>
-        </ul>
-        <h3>🔴 NHÓM HƯỚNG XẤU (HUNG HƯỚNG)</h3>
-        <p>Đây là các hướng đón nhận các luồng khí xấu (Sát Khí), gây ra trở ngại, tai họa và suy giảm năng lượng sống.</p>
-        <h4>1. Tuyệt Mạng - Hướng "Đại Hung" (Xấu Nhất)</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Tuyệt" là chấm dứt, "Mạng" là sinh mệnh. Đây là hướng có năng lượng sát thương mạnh nhất, tượng trưng cho sự suy vong và kết thúc.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Sức khỏe:</strong> Gây ra những bệnh trọng, bệnh hiểm nghèo, khó chữa trị, ảnh hưởng đến tuổi thọ.</li>
-            <li><strong>Gia đạo:</strong> Nguy cơ tuyệt tự (khó có con), mâu thuẫn gia đình đến mức đổ vỡ nghiêm trọng, ly tán.</li>
-            <li><strong>Tai họa:</strong> Dễ gặp các tai nạn bất ngờ, thương tật, kiện tụng dẫn đến hao tài tốn của nặng nề, thậm chí mất hết.</li>
-        </ul>
-        <h4>2. Ngũ Quỷ - Hướng "Hung" (Xấu Nhì)</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Ngũ Quỷ" tức là năm con quỷ (hỏa tinh) phá phách. Năng lượng của hướng này rất hỗn loạn, liên quan đến hỏa hoạn và thị phi.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Tài lộc:</strong> Dễ bị phá tài, mất của, làm ăn thất bát, đầu tư sai chỗ.</li>
-            <li><strong>An ninh:</strong> Cảnh giác với hỏa hoạn (cháy nhà), trộm cướp.</li>
-            <li><strong>Sức khỏe & Tinh thần:</strong> Sức khỏe giảm sút, hay gặp các vấn đề về tim mạch, máu huyết. Tinh thần bất ổn, dễ nổi nóng, gây gổ, mất kiểm soát.</li>
-        </ul>
-        <h4>3. Lục Sát - Hướng "Hung" (Xấu Thứ Ba)</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Lục" là sáu, "Sát" là sát khí. Tượng trưng cho sáu dạng tai họa, rắc rối liên miên.</p>
-        <p><strong>Tác động chi tiết:</strong></p>
-        <ul>
-            <li><strong>Quan hệ:</strong> Gây ra thị phi, kiện tụng, tranh chấp. Các mối quan hệ xã hội, đồng nghiệp, hàng xóm dễ xảy ra mâu thuẫn, khẩu thiệt.</li>
-            <li><strong>Gia đạo:</strong> Vợ chồng dễ bất hòa, người nhà hay có xích mích.</li>
-            <li><strong>Tài lộc & Sức khỏe:</strong> Tài vận không tốt, hay gặp những rủi ro nhỏ như mất mát đồ đạc. Bệnh tật cũng đến liên tục, tuy không nguy hiểm tức thời như Tuyệt Mạng nhưng dai dẳng, hao mòn sức lực.</li>
-        </ul>
-        <h4>4. Hoạ Hại - Hướng "Tiểu Hung" (Ít Xấu Nhất)</h4>
-        <p><strong>Ý nghĩa tên gọi:</strong> "Họa" là tai họa, "Hại" là tổn hại. Đây là hướng mang đến những điều phiền toái, hao hụt nhỏ.</p>
-        <ul>
-            <li><strong>Tài lộc:</strong> Khó tích tụ tiền của, tiền kiếm được dễ bị thất thoát vào các chi phí không tên, làm việc vất vả nhưng không dư dả.</li>
-            <li><strong>Quan hệ:</strong> Dễ gặp chuyện thị phi, bị đàm tiếu, bị người khác hãm hại ngầm hoặc tranh giành lợi lộc nhỏ.</li>
-            <li><strong>An ninh:</strong> Cần đề phòng trộm cướp, mất mát tài sản cá nhân. Sức khỏe và gia vận sa sút nhẹ, tạo cảm giác bất an, không thoải mái.</li>
-        </ul>
+    <!-- ========== ĐỊA CHI ========== -->
+    <h4>2. Địa chi</h4>
+    <p><em>✅ Đối xứng – kết quả giống nhau khi đổi vai trò chính chủ.</em></p>
+    <table style="width:100%; border-collapse:collapse; background:white; border-radius:16px; overflow:hidden; margin:12px 0; font-size:0.85rem;">
+        <thead><tr style="background:#1e2b3a; color:white;"><th style="padding:8px; border:1px solid #2c3e50;">Loại</th><th style="padding:8px; border:1px solid #2c3e50;">Các cặp</th><th style="padding:8px; border:1px solid #2c3e50;">Điểm</th><th style="padding:8px; border:1px solid #2c3e50;">Ví dụ</th></tr></thead>
+        <tbody>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Lục hợp</strong></td><td style="border:1px solid #bdc9d5;">Tí–Sửu, Dần–Hợi, Mão–Tuất, Thìn–Dậu, Tỵ–Thân, Ngọ–Mùi</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Tỵ + Thân = 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Tam hợp</strong></td><td style="border:1px solid #bdc9d5;">Thân–Tí–Thìn, Dần–Ngọ–Tuất, Tỵ–Dậu–Sửu, Hợi–Mão–Mùi</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Dần + Ngọ = 2 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Lục xung</strong></td><td style="border:1px solid #bdc9d5;">Tí–Ngọ, Sửu–Mùi, Dần–Thân, Mão–Dậu, Thìn–Tuất, Tỵ–Hợi</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Tí + Ngọ = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Lục phá</strong></td><td style="border:1px solid #bdc9d5;">Tí–Dậu, Sửu–Thìn, Dần–Hợi, Mão–Ngọ, Tỵ–Tuất, Mùi–Thân</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Mão + Ngọ = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Lục hại</strong></td><td style="border:1px solid #bdc9d5;">Tí–Mùi, Sửu–Ngọ, Dần–Tỵ, Mão–Thìn, Thân–Hợi, Dậu–Tuất</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Dần + Tỵ = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Tam hình</strong></td><td style="border:1px solid #bdc9d5;">Tí–Mão, Dần–Tỵ–Thân, Sửu–Tuất–Mùi</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Sửu + Tuất = 0 điểm</td></tr>
+            <tr style="background:#fff9c4;"><td style="border:1px solid #bdc9d5;"><strong>Bình</strong></td><td style="border:1px solid #bdc9d5;">Không thuộc các trường hợp trên</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.0</strong></td><td style="border:1px solid #bdc9d5;">Tí + Mão = 1 điểm</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ========== CUNG PHI ========== -->
+    <h4>3. Cung phi</h4>
+    <p><em>✅ Đối xứng – kết quả giống nhau khi đổi vai trò chính chủ.</em></p>
+    <table style="width:100%; border-collapse:collapse; background:white; border-radius:16px; overflow:hidden; margin:12px 0; font-size:0.85rem;">
+        <thead><tr style="background:#1e2b3a; color:white;"><th style="padding:8px; border:1px solid #2c3e50;">Loại</th><th style="padding:8px; border:1px solid #2c3e50;">Các cặp cung</th><th style="padding:8px; border:1px solid #2c3e50;">Điểm</th><th style="padding:8px; border:1px solid #2c3e50;">Ví dụ</th></tr></thead>
+        <tbody>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Sinh Khí</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Tốn, Càn–Đoài, Cấn–Khôn, Chấn–Ly</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Tốn = 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Phúc Đức</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Ly, Càn–Cấn, Đoài–Khôn, Chấn–Tốn</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Càn + Cấn = 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Thiên Y</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Chấn, Càn–Khôn, Đoài–Cấn, Ly–Tốn</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Chấn = 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>Phục Vị</strong></td><td style="border:1px solid #bdc9d5;">Hai cung giống nhau</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Khảm = 2 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Tuyệt Mạng</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Càn, Ly–Cấn, Chấn–Đoài, Tốn–Khôn</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Càn = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Ngũ Quỷ</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Cấn, Ly–Càn, Chấn–Khôn, Tốn–Đoài</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Cấn = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Lục Sát</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Đoài, Ly–Khôn, Chấn–Càn, Tốn–Cấn</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Đoài = 0 điểm</td></tr>
+            <tr style="background:#ffebee;"><td style="border:1px solid #bdc9d5;"><strong>Hoạ Hại</strong></td><td style="border:1px solid #bdc9d5;">Khảm–Khôn, Ly–Đoài, Chấn–Cấn, Tốn–Càn</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Khảm + Khôn = 0 điểm</td></tr>
+        </tbody>
+    </table>
+    <div style="background:#e3f2fd; border-radius:16px; padding:12px; margin:12px 0;">
+        <strong>📌 Quy đổi cung phi → ngũ hành (dùng cho Niên mệnh):</strong><br>
+        Khảm (Thủy) – Khôn (Thổ) – Chấn (Mộc) – Tốn (Mộc) – Càn (Kim) – Đoài (Kim) – Cấn (Thổ) – Ly (Hỏa)
     </div>
 
-    <div class="explain-diff">
-        <strong>🔍 Cách tính điểm chi tiết và giải thích sự khác biệt giữa hai kết quả so sánh</strong>
-        <p style="margin-top: 10px;">Khi bạn chọn năm sinh và giới tính của mình (chính chủ), hệ thống sẽ tính điểm dựa trên bạn làm trung tâm. Có hai loại quan hệ:</p>
-        <ul>
-            <li><strong>Quan hệ đối xứng (Thiên can, Địa chi, Cung mệnh):</strong> Kết quả không phụ thuộc vào ai là chính chủ.
-                <ul>
-                    <li>2 điểm: hợp (can hợp, lục hợp, tam hợp, cung tốt).</li>
-                    <li>1 điểm: bình (không hợp, không xung).</li>
-                    <li>0 điểm: xung khắc (can xung, lục xung, lục phá, lục hại, tam hình, cung xấu).</li>
-                </ul>
-            </li>
-            <li><strong>Quan hệ một chiều (Mệnh nạp âm và Niên mệnh – hành cung):</strong> Kết quả phụ thuộc vào chiều tương sinh khắc giữa hai người.
-                <ul>
-                    <li>2 điểm: <strong>Đối phương sinh chính chủ</strong> = TỐT TƯƠNG SINH (Tốt).</li>
-                    <li>1.5 điểm: <strong>Chính chủ sinh đối phương</strong> = ỨNG TƯƠNG SINH (Tốt).</li>
-                    <li>1 điểm: <strong>Bình hòa</strong> (không sinh, không khắc) = BÌNH (Bình).</li>
-                    <li>0.5 điểm: <strong>Chính chủ khắc đối phương</strong> = ỨNG TƯƠNG KHẮC (Xấu).</li>
-                    <li>0 điểm: <strong>Đối phương khắc chính chủ</strong> = XẤU TƯƠNG KHẮC (Xấu).</li>
-                </ul>
-            </li>
-        </ul>
-        <div class="example">
-            <strong>Ví dụ cụ thể:</strong>
-            <ul>
-                <li>Bạn chọn <strong>Nữ 1960</strong> (mệnh Thổ, niên mệnh Thổ) so với Nam 1985 (mệnh Kim, niên mệnh Kim):
-                    <ul>
-                        <li>Mệnh: bạn Thổ sinh đối phương Kim → ỨNG TƯƠNG SINH (1.5 điểm).</li>
-                        <li>Niên mệnh: bạn Thổ sinh đối phương Kim → ỨNG TƯƠNG SINH (1.5 điểm).</li>
-                        <li>Thiên can, Địa chi, Cung mệnh: tính đối xứng, giả sử đều hợp → mỗi mục 2 điểm.</li>
-                    </ul>
-                </li>
-                <li>Bạn chọn <strong>Nam 1985</strong> (mệnh Kim, niên mệnh Kim) so với Nữ 1960 (mệnh Thổ, niên mệnh Thổ):
-                    <ul>
-                        <li>Mệnh: đối phương Thổ sinh bạn Kim → TỐT TƯƠNG SINH (2 điểm).</li>
-                        <li>Niên mệnh: đối phương Thổ sinh bạn Kim → TỐT TƯƠNG SINH (2 điểm).</li>
-                        <li>Thiên can, Địa chi, Cung mệnh: giống như trên, vẫn 2 điểm mỗi mục.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p><strong>Như vậy, cùng một cặp nhưng khi đổi vai trò chính chủ, điểm Mệnh và Niên mệnh có thể thay đổi, phản ánh đúng việc bạn được hưởng lợi (TỐT TƯƠNG SINH), bạn hỗ trợ đối phương (ỨNG TƯƠNG SINH), hay bị áp chế (XẤU TƯƠNG KHẮC), v.v.</strong></p>
-        </div>
-    </div>
+    <!-- ========== MỆNH NẠP ÂM ========== -->
+    <h4>4. Mệnh nạp âm (ngũ hành nạp âm)</h4>
+    <p><em>⚠️ Một chiều – phụ thuộc vào “đối phương có sinh/khắc chính chủ không”.</em></p>
+    <table style="width:100%; border-collapse:collapse; background:white; border-radius:16px; overflow:hidden; margin:12px 0; font-size:0.85rem;">
+        <thead><tr style="background:#1e2b3a; color:white;"><th style="padding:8px; border:1px solid #2c3e50;">Loại</th><th style="padding:8px; border:1px solid #2c3e50;">Điều kiện</th><th style="padding:8px; border:1px solid #2c3e50;">Điểm</th><th style="padding:8px; border:1px solid #2c3e50;">Ví dụ (chính chủ - đối phương)</th></tr></thead>
+        <tbody>
+            <tr style="background:#c8e6c9;"><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Đối phương sinh chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Thủy → 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ sinh đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Hỏa, đối phương Thổ → 1.5 điểm</td></tr>
+            <tr style="background:#fff9c4;"><td style="border:1px solid #bdc9d5;"><strong>BÌNH</strong></td><td style="border:1px solid #bdc9d5;">Không sinh, không khắc</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Mộc → 1 điểm</td></tr>
+            <tr style="background:#ffe0b2;"><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ khắc đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Kim, đối phương Mộc → 0.5 điểm</td></tr>
+            <tr style="background:#ffcdd2;"><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Đối phương khắc chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Kim → 0 điểm</td></tr>
+        </tbody>
+    </table>
 
-    <footer>Dữ liệu phong thủy 60 hoa giáp & bát trạch – cập nhật công thức cung phi theo tổng số năm</footer>
+    <!-- ========== NIÊN MỆNH ========== -->
+    <h4>5. Niên mệnh (hành của cung phi)</h4>
+    <p><em>⚠️ Một chiều – phụ thuộc vào “đối phương có sinh/khắc chính chủ không”.</em></p>
+    <table style="width:100%; border-collapse:collapse; background:white; border-radius:16px; overflow:hidden; margin:12px 0; font-size:0.85rem;">
+        <thead><tr style="background:#1e2b3a; color:white;"><th style="padding:8px; border:1px solid #2c3e50;">Loại</th><th style="padding:8px; border:1px solid #2c3e50;">Điều kiện</th><th style="padding:8px; border:1px solid #2c3e50;">Điểm</th><th style="padding:8px; border:1px solid #2c3e50;">Ví dụ (chính chủ - đối phương)</th></tr></thead>
+        <tbody>
+            <tr style="background:#c8e6c9;"><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Đối phương sinh chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>2.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Kim, đối phương Thổ → 2 điểm</td></tr>
+            <tr style="background:#e8f5e9;"><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG SINH</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ sinh đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Hỏa, đối phương Thổ → 1.5 điểm</td></tr>
+            <tr style="background:#fff9c4;"><td style="border:1px solid #bdc9d5;"><strong>BÌNH</strong></td><td style="border:1px solid #bdc9d5;">Không sinh, không khắc</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>1.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Mộc → 1 điểm</td></tr>
+            <tr style="background:#ffe0b2;"><td style="border:1px solid #bdc9d5;"><strong>ỨNG TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ khắc đối phương</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.5</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Kim, đối phương Mộc → 0.5 điểm</td></tr>
+            <tr style="background:#ffcdd2;"><td style="border:1px solid #bdc9d5;"><strong>TƯƠNG KHẮC</strong></td><td style="border:1px solid #bdc9d5;">Đối phương khắc chính chủ</td><td style="text-align:center; border:1px solid #bdc9d5;"><strong>0.0</strong></td><td style="border:1px solid #bdc9d5;">Chính chủ Mộc, đối phương Kim → 0 điểm</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ========== TỔNG KẾT ========== -->
+    <h4>🎯 Tổng điểm & phân loại</h4>
+    <ul>
+        <li><strong>8.0 – 10.0 điểm:</strong> ⭐ RẤT HỢP</li>
+        <li><strong>6.0 – 7.9 điểm:</strong> ✅ KHÁ HỢP</li>
+        <li><strong>4.0 – 5.9 điểm:</strong> ⚠️ TRUNG BÌNH</li>
+        <li><strong>0.0 – 3.9 điểm:</strong> ❌ HẠN CHẾ</li>
+    </ul>
+
+    <!-- VÍ DỤ MINH HỌA -->
+    <div class="example">
+        <strong>📌 VÍ DỤ MINH HỌA: Nam 2025 (Ất Tỵ) - Nữ 2028 (Mậu Thân)</strong><br><br>
+        <strong>📅 Thông tin cặp đôi (theo code):</strong><br>
+        - <strong>Nam 2025:</strong> Ất Tỵ (Thiên can Ất - Mộc, Mệnh Phú Đăng Hỏa, Cung Khôn, Niên mệnh Thổ)<br>
+        - <strong>Nữ 2028:</strong> Mậu Thân (Thiên can Mậu - Thổ, Mệnh Đại Dịch Thổ, Cung Đoài, Niên mệnh Kim)<br><br>
+        
+        <strong>🔁 TRƯỜNG HỢP 1: Chính chủ là NAM 2025</strong><br>
+        - Thiên can: Ất (Mộc) vs Mậu (Thổ) → Mộc khắc Thổ → chính chủ khắc đối phương → <strong>ỨNG TƯƠNG KHẮC = 0.5 điểm</strong><br>
+        - Địa chi: Tỵ + Thân → Lục hợp → <strong>2.0 điểm</strong><br>
+        - Cung phi: Khôn + Đoài → Thiên Y → <strong>2.0 điểm</strong><br>
+        - Mệnh nạp âm: Chính chủ Hỏa, đối phương Thổ → Hỏa sinh Thổ → chính chủ sinh đối phương → <strong>ỨNG TƯƠNG SINH = 1.5 điểm</strong><br>
+        - Niên mệnh: Chính chủ Thổ, đối phương Kim → Thổ sinh Kim → chính chủ sinh đối phương → <strong>ỨNG TƯƠNG SINH = 1.5 điểm</strong><br>
+        <strong>👉 TỔNG: 0.5 + 2.0 + 2.0 + 1.5 + 1.5 = 7.5 điểm → ✅ KHÁ HỢP</strong><br><br>
+        
+        <strong>🔁 TRƯỜNG HỢP 2: Chính chủ là NỮ 2028</strong><br>
+        - Thiên can: Mậu (Thổ) vs Ất (Mộc) → Mộc khắc Thổ → đối phương khắc chính chủ → <strong>TƯƠNG KHẮC = 0.0 điểm</strong><br>
+        - Địa chi: Thân + Tỵ → Lục hợp → <strong>2.0 điểm</strong><br>
+        - Cung phi: Đoài + Khôn → Thiên Y → <strong>2.0 điểm</strong><br>
+        - Mệnh nạp âm: Chính chủ Thổ, đối phương Hỏa → Hỏa sinh Thổ → đối phương sinh chính chủ → <strong>TƯƠNG SINH = 2.0 điểm</strong><br>
+        - Niên mệnh: Chính chủ Kim, đối phương Thổ → Thổ sinh Kim → đối phương sinh chính chủ → <strong>TƯƠNG SINH = 2.0 điểm</strong><br>
+        <strong>👉 TỔNG: 0.0 + 2.0 + 2.0 + 2.0 + 2.0 = 8.0 điểm → ⭐ RẤT HỢP</strong><br><br>
+        
+        <em>※ Lưu ý: Cùng một cặp nhưng điểm khác nhau khi đổi vai trò chính chủ do các yếu tố MỘT CHIỀU (Thiên can, Mệnh nạp âm, Niên mệnh).</em>
+    </div>
+</div>
+
+<!-- PHẦN GIẢI THÍCH HƯỚNG TỐT XẤU (GIỮ NGUYÊN BẢN GỐC) -->
+<div class="direction-detail" style="background:#fef9e7; border-radius:28px; padding:24px 28px; margin-top:24px;">
+    <h3 style="margin-top:0;">🟢 NHÓM HƯỚNG TỐT (CÁT HƯỚNG) – PHONG THỦY BÁT TRẠCH</h3>
+    <ul>
+        <li><strong>Sinh Khí (Đại Cát):</strong> Vượng tài lộc nhất, sức khỏe dồi dào, công danh thăng tiến.</li>
+        <li><strong>Phúc Đức (Diên Niên – Đại Cát):</strong> Hòa thuận gia đạo, tình cảm vợ chồng bền chặt.</li>
+        <li><strong>Thiên Y (Cát):</strong> Hóa giải bệnh tật, sức khỏe cải thiện, có quý nhân.</li>
+        <li><strong>Phục Vị (Tiểu Cát):</strong> Ổn định tinh thần, tốt cho học hành, tu tập.</li>
+    </ul>
+    <h3>🔴 NHÓM HƯỚNG XẤU (HUNG HƯỚNG)</h3>
+    <ul>
+        <li><strong>Tuyệt Mạng (Đại Hung):</strong> Ảnh hưởng nặng đến sức khỏe, hao tài, tuyệt tự.</li>
+        <li><strong>Ngũ Quỷ (Hung):</strong> Dễ hỏa hoạn, trộm cướp, phá tài, tinh thần bất ổn.</li>
+        <li><strong>Lục Sát (Hung):</strong> Thị phi, kiện tụng, mâu thuẫn liên miên.</li>
+        <li><strong>Hoạ Hại (Tiểu Hung):</strong> Khó tích lũy tài sản, bị đàm tiếu, mất mát nhỏ.</li>
+    </ul>
 </div>
 
 <script>
 (function() {
-    // ==================== DỮ LIỆU GỐC (GIỮ NGUYÊN) ====================
+    // ==================== DỮ LIỆU GỐC ====================
     const STEMS = ["Canh", "Tân", "Nhâm", "Quý", "Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ"];
     const BRANCHES = ["Tí", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
 
@@ -757,30 +770,56 @@
         return duong.includes(stem) ? "Dương" : "Âm";
     }
 
+    // ========== HÀM THIÊN CAN MỚI (1 CHIỀU + LỤC HỢP/XUNG) ==========
     function getThienCanRelation(can1, can2) {
         const canElement = ["Kim","Kim","Thủy","Thủy","Mộc","Mộc","Hỏa","Hỏa","Thổ","Thổ"];
         const i = STEMS.indexOf(can1);
         const j = STEMS.indexOf(can2);
         if (i === -1 || j === -1) return ["Lỗi", 0];
 
+        // 1. Lục hợp (ưu tiên cao nhất)
         const hopPairs = [[4,9], [5,0], [6,1], [7,2], [8,3]];
         for (let p of hopPairs) {
             if ((i === p[0] && j === p[1]) || (i === p[1] && j === p[0])) {
-                return ["Hợp (can hợp)", 2];
+                return ["Lục hợp", 2];
             }
         }
+        
+        // 2. Lục xung
         const xungPairs = [[4,0], [5,1], [6,2], [7,3], [8,9]];
         for (let p of xungPairs) {
             if ((i === p[0] && j === p[1]) || (i === p[1] && j === p[0])) {
-                return ["Xung (can xung)", 0];
+                return ["Lục xung", 0];
             }
         }
+        
+        // 3. Xét ngũ hành 1 CHIỀU
         const elem1 = canElement[i];
         const elem2 = canElement[j];
-        const relation = getElementRelation(elem1, elem2);
-        if (relation === "Tương Sinh") return ["Tương Sinh (ngũ hành)", 2];
-        else if (relation === "Tương Khắc") return ["Tương Khắc (ngũ hành)", 0];
-        else return ["Bình (cùng hành)", 1];
+        const sinh = { "Kim":"Thủy", "Thủy":"Mộc", "Mộc":"Hỏa", "Hỏa":"Thổ", "Thổ":"Kim" };
+        const khac = { "Kim":"Mộc", "Mộc":"Thổ", "Thổ":"Thủy", "Thủy":"Hỏa", "Hỏa":"Kim" };
+        
+        // Đối phương sinh chính chủ → TƯƠNG SINH (2.0)
+        if (sinh[elem2] === elem1) {
+            return ["TƯƠNG SINH", 2];
+        }
+        
+        // Chính chủ sinh đối phương → ỨNG TƯƠNG SINH (1.5)
+        if (sinh[elem1] === elem2) {
+            return ["ỨNG TƯƠNG SINH", 1.5];
+        }
+        
+        // Đối phương khắc chính chủ → TƯƠNG KHẮC (0.0)
+        if (khac[elem2] === elem1) {
+            return ["TƯƠNG KHẮC", 0];
+        }
+        
+        // Chính chủ khắc đối phương → ỨNG TƯƠNG KHẮC (0.5)
+        if (khac[elem1] === elem2) {
+            return ["ỨNG TƯƠNG KHẮC", 0.5];
+        }
+        
+        return ["BÌNH", 1];
     }
 
     function getDiaChiRelation(chi1, chi2) {
@@ -901,10 +940,10 @@
         let menhDiem, menhLabel;
         if (menhRel === "Tương Sinh") {
             menhDiem = 2;
-            menhLabel = "TỐT TƯƠNG SINH";
+            menhLabel = "TƯƠNG SINH";
         } else if (menhRel === "Tương Khắc") {
             menhDiem = 0;
-            menhLabel = "XẤU TƯƠNG KHẮC";
+            menhLabel = "TƯƠNG KHẮC";
         } else {
             const reverse = getElementRelation(p1.menhElem, p2.menhElem);
             if (reverse === "Tương Sinh") {
@@ -927,10 +966,10 @@
         let niemDiem, niemLabel;
         if (niemRel === "Tương Sinh") {
             niemDiem = 2;
-            niemLabel = "TỐT TƯƠNG SINH";
+            niemLabel = "TƯƠNG SINH";
         } else if (niemRel === "Tương Khắc") {
             niemDiem = 0;
-            niemLabel = "XẤU TƯƠNG KHẮC";
+            niemLabel = "TƯƠNG KHẮC";
         } else {
             const reverse = getElementRelation(p1.niemMenh, p2.niemMenh);
             if (reverse === "Tương Sinh") {
@@ -956,7 +995,7 @@
         };
     }
 
-    // ========== HIỂN THỊ POPUP - ĐÃ THÊM NĂM SINH VÀ CAN CHI ==========
+    // ========== HIỂN THỊ POPUP (GIỮ NGUYÊN) ==========
     function showCompareModal(me, partner, relation) {
         const modal = document.getElementById('compareModal');
         const modalBody = document.getElementById('modalBody');
@@ -965,9 +1004,14 @@
 
         const amDuongMe = getAmDuong(me.stem);
         const amDuongPartner = getAmDuong(partner.stem);
-
+        const meElemCan = { "Giáp":"Mộc","Ất":"Mộc","Bính":"Hỏa","Đinh":"Hỏa","Mậu":"Thổ","Kỷ":"Thổ","Canh":"Kim","Tân":"Kim","Nhâm":"Thủy","Quý":"Thủy" }[me.stem];
+        const partnerElemCan = { "Giáp":"Mộc","Ất":"Mộc","Bính":"Hỏa","Đinh":"Hỏa","Mậu":"Thổ","Kỷ":"Thổ","Canh":"Kim","Tân":"Kim","Nhâm":"Thủy","Quý":"Thủy" }[partner.stem];
+        
         const menhMe = `${me.menhName} (${amDuongMe} ${me.menhElem})`;
         const menhPartner = `${partner.menhName} (${amDuongPartner} ${partner.menhElem})`;
+        
+        const niemMe = me.niemMenh;
+        const niemPartner = partner.niemMenh;
 
         const isMeEast = (me.cung === 'Khảm' || me.cung === 'Ly' || me.cung === 'Chấn' || me.cung === 'Tốn');
         const isPartnerEast = (partner.cung === 'Khảm' || partner.cung === 'Ly' || partner.cung === 'Chấn' || partner.cung === 'Tốn');
@@ -975,32 +1019,36 @@
         const partnerTrach = isPartnerEast ? 'Đông tứ trạch' : 'Tây tứ trạch';
         const cungTrach = (isMeEast === isPartnerEast) ? 'Cùng trạch' : 'Khác trạch';
 
-        // Lấy điểm từ relation đã tính chuẩn
         const tongDiem = relation.diem;
         let diemMenh = 0, diemThienCan = 0, diemDiaChi = 0, diemCung = 0, diemNiem = 0;
-        if (relation.menh.includes('TỐT TƯƠNG SINH')) diemMenh = 2;
-        else if (relation.menh.includes('ỨNG TƯƠNG SINH')) diemMenh = 1.5;
-        else if (relation.menh.includes('BÌNH')) diemMenh = 1;
-        else if (relation.menh.includes('ỨNG TƯƠNG KHẮC')) diemMenh = 0.5;
-        else if (relation.menh.includes('XẤU TƯƠNG KHẮC')) diemMenh = 0;
-
-        if (relation.thienCan.includes('Hợp') || relation.thienCan.includes('Tương Sinh')) diemThienCan = 2;
-        else if (relation.thienCan.includes('Bình')) diemThienCan = 1;
-        else diemThienCan = 0;
-
-        if (relation.diaChi.includes('Lục hợp') || relation.diaChi.includes('Tam hợp')) diemDiaChi = 2;
-        else if (relation.diaChi.includes('Bình')) diemDiaChi = 1;
+        
+        if (relation.menh === 'TƯƠNG SINH') diemMenh = 2;
+        else if (relation.menh === 'ỨNG TƯƠNG SINH') diemMenh = 1.5;
+        else if (relation.menh === 'BÌNH') diemMenh = 1;
+        else if (relation.menh === 'ỨNG TƯƠNG KHẮC') diemMenh = 0.5;
+        else if (relation.menh === 'TƯƠNG KHẮC') diemMenh = 0;
+        
+        if (relation.thienCan === 'Lục hợp') diemThienCan = 2;
+        else if (relation.thienCan === 'TƯƠNG SINH') diemThienCan = 2;
+        else if (relation.thienCan === 'ỨNG TƯƠNG SINH') diemThienCan = 1.5;
+        else if (relation.thienCan === 'BÌNH') diemThienCan = 1;
+        else if (relation.thienCan === 'ỨNG TƯƠNG KHẮC') diemThienCan = 0.5;
+        else if (relation.thienCan === 'Lục xung') diemThienCan = 0;
+        else if (relation.thienCan === 'TƯƠNG KHẮC') diemThienCan = 0;
+        
+        if (relation.diaChi === 'Lục hợp' || relation.diaChi === 'Tam hợp') diemDiaChi = 2;
+        else if (relation.diaChi === 'Bình') diemDiaChi = 1;
         else diemDiaChi = 0;
-
-        if (relation.cung.includes('Sinh Khí') || relation.cung.includes('Phúc Đức') || relation.cung.includes('Thiên Y') || relation.cung.includes('Phục Vị')) diemCung = 2;
-        else if (relation.cung.includes('Tuyệt Mạng') || relation.cung.includes('Ngũ Quỷ') || relation.cung.includes('Lục Sát') || relation.cung.includes('Hoạ Hại')) diemCung = 0;
+        
+        if (relation.cung === 'Sinh Khí' || relation.cung === 'Phúc Đức' || relation.cung === 'Thiên Y' || relation.cung === 'Phục Vị') diemCung = 2;
+        else if (relation.cung === 'Tuyệt Mạng' || relation.cung === 'Ngũ Quỷ' || relation.cung === 'Lục Sát' || relation.cung === 'Hoạ Hại') diemCung = 0;
         else diemCung = 1;
-
-        if (relation.niem.includes('TỐT TƯƠNG SINH')) diemNiem = 2;
-        else if (relation.niem.includes('ỨNG TƯƠNG SINH')) diemNiem = 1.5;
-        else if (relation.niem.includes('BÌNH')) diemNiem = 1;
-        else if (relation.niem.includes('ỨNG TƯƠNG KHẮC')) diemNiem = 0.5;
-        else if (relation.niem.includes('XẤU TƯƠNG KHẮC')) diemNiem = 0;
+        
+        if (relation.niem === 'TƯƠNG SINH') diemNiem = 2;
+        else if (relation.niem === 'ỨNG TƯƠNG SINH') diemNiem = 1.5;
+        else if (relation.niem === 'BÌNH') diemNiem = 1;
+        else if (relation.niem === 'ỨNG TƯƠNG KHẮC') diemNiem = 0.5;
+        else if (relation.niem === 'TƯƠNG KHẮC') diemNiem = 0;
 
         let xepLoai = '', danhGia = '';
         if (tongDiem >= 8) { xepLoai = '⭐ RẤT HỢP'; danhGia = 'Rất tốt cho hôn nhân, tình cảm và tài lộc.'; }
@@ -1011,76 +1059,23 @@
         const getBadge = (d) => d >= 1.5 ? '<span class="badge-good">Tốt</span>' : (d >= 0.5 ? '<span class="badge-normal">Bình</span>' : '<span class="badge-bad">Xấu</span>');
         const getQuanHeText = (rel, d) => (d >= 1.5 ? rel + ' ✓' : (d >= 0.5 ? rel : rel + ' ✗'));
 
-        // --- BỔ SUNG: Hiển thị năm sinh và năm âm lịch (Can Chi) ---
         const meYearInfo = `<strong style="font-size:1.05rem;">${me.year} (${me.stem} ${me.branch})</strong>`;
         const partnerYearInfo = `<strong style="font-size:1.05rem;">${partner.year} (${partner.stem} ${partner.branch})</strong>`;
-        // -----------------------------------------------------------
 
         const html = `
             <table class="compare-table">
                 <thead>
-                    <tr>
-                        <th>Yếu tố</th>
-                        <th>${gioiTinhMe} (Chính chủ)</th>
-                        <th>${gioiTinhPartner} (Đối phương)</th>
-                        <th>Quan hệ</th>
-                        <th>Điểm</th>
-                    </tr>
+                    <tr><th>Yếu tố</th><th>${gioiTinhMe} (Chính chủ)</th><th>${gioiTinhPartner} (Đối phương)</th><th>Quan hệ</th><th>Điểm</th></tr>
                 </thead>
                 <tbody>
-                    <!-- DÒNG NĂM SINH MỚI ĐƯỢC THÊM VÀO -->
-                    <tr style="background-color: #f0f7ff;">
-                        <td><strong>📅 Năm sinh & Can Chi</strong></td>
-                        <td colspan="2"><div style="display: flex; justify-content: space-between; align-items: center;">${meYearInfo}<span style="font-size:1.5rem; color:#0d6efd;"> ⇄ </span>${partnerYearInfo}</div></td>
-                        <td colspan="2" style="text-align: center;">—</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mệnh nạp âm</strong></td>
-                        <td>${menhMe}</td>
-                        <td>${menhPartner}</td>
-                        <td>${getQuanHeText(relation.menh, diemMenh)}</td>
-                        <td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Thiên can</strong></td>
-                        <td>${me.stem} (${amDuongMe})</td>
-                        <td>${partner.stem} (${amDuongPartner})</td>
-                        <td>${getQuanHeText(relation.thienCan, diemThienCan)}</td>
-                        <td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Địa chi</strong></td>
-                        <td>${me.branch}</td>
-                        <td>${partner.branch}</td>
-                        <td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td>
-                        <td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cung phi</strong></td>
-                        <td>${me.cung} (${meTrach})</td>
-                        <td>${partner.cung} (${partnerTrach})</td>
-                        <td>${getQuanHeText(relation.cung, diemCung)}</td>
-                        <td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Niên mệnh</strong></td>
-                        <td>${me.niemMenh}</td>
-                        <td>${partner.niemMenh}</td>
-                        <td>${getQuanHeText(relation.niem, diemNiem)}</td>
-                        <td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bát trạch</strong> (tham khảo)</td>
-                        <td>${meTrach}</td>
-                        <td>${partnerTrach}</td>
-                        <td>${cungTrach}</td>
-                        <td style="color:#888;">—</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td><strong>🎯 Tổng kết</strong></td>
-                        <td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td>
-                        <td><strong>${tongDiem.toFixed(1)} / 10</strong></td>
-                    </tr>
+                    <tr style="background-color: #f0f7ff;"><td><strong>📅 Năm sinh & Can Chi</strong></td><td colspan="2"><div style="display: flex; justify-content: space-between; align-items: center;">${meYearInfo}<span style="font-size:1.5rem; color:#0d6efd;"> ⇄ </span>${partnerYearInfo}</div></td><td colspan="2" style="text-align: center;">—</td></tr>
+                    <tr style="background:#fafafa;"><td><strong>Mệnh nạp âm</strong></td><td>${menhMe}</td><td>${menhPartner}</td><td>${getQuanHeText(relation.menh, diemMenh)}</td><td>${diemMenh.toFixed(1)} ${getBadge(diemMenh)}</td></tr>
+                    <tr style="background:#fff;"><td><strong>Thiên can</strong></td><td>${me.stem} (${amDuongMe} ${meElemCan})</td><td>${partner.stem} (${amDuongPartner} ${partnerElemCan})</td><td>${getQuanHeText(relation.thienCan, diemThienCan)}</td><td>${diemThienCan.toFixed(1)} ${getBadge(diemThienCan)}</td></tr>
+                    <tr style="background:#fafafa;"><td><strong>Địa chi</strong></td><td>${me.branch}</td><td>${partner.branch}</td><td>${getQuanHeText(relation.diaChi, diemDiaChi)}</td><td>${diemDiaChi.toFixed(1)} ${getBadge(diemDiaChi)}</td></tr>
+                    <tr style="background:#fff;"><td><strong>Cung phi</strong></td><td>${me.cung} (${meTrach})</td><td>${partner.cung} (${partnerTrach})</td><td>${getQuanHeText(relation.cung, diemCung)}</td><td>${diemCung.toFixed(1)} ${getBadge(diemCung)}</td></tr>
+                    <tr style="background:#fafafa;"><td><strong>Niên mệnh</strong></td><td>${niemMe}</td><td>${niemPartner}</td><td>${getQuanHeText(relation.niem, diemNiem)}</td><td>${diemNiem.toFixed(1)} ${getBadge(diemNiem)}</td></tr>
+                    <tr style="background:#fff;"><td><strong>Bát trạch</strong> (tham khảo)</td><td>${meTrach}</td><td>${partnerTrach}</td><td>${cungTrach}</td><td style="color:#888;">—</td></tr>
+                    <tr class="total-row"><td><strong>🎯 Tổng kết</strong></td><td colspan="3" style="text-align:center; font-weight:bold;">${xepLoai}</td><td><strong>${tongDiem.toFixed(1)} / 10</strong></td></tr>
                 </tbody>
             </table>
             <div style="margin-top:16px;padding:12px;background:#e8f4f8;border-radius:16px;text-align:center;">📝 ${danhGia}</div>
@@ -1133,7 +1128,7 @@
 
         const sorted = [...rows].sort((a,b) => b.diem - a.diem).slice(0,20);
         document.getElementById('top20Container').style.display = 'block';
-        document.getElementById('top20Container').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>${sorted.map(item => `<tr><td>${item.year}</td><td>${oppositeGender === 'male' ? 'Nam' : 'Nữ'}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</table>`;
+        document.getElementById('top20Container').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương khác giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><thead><tr><th>Năm</th><th>Giới tính</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr></thead><tbody>${sorted.map(item => `<tr><td>${item.year}</td><td>${oppositeGender === 'male' ? 'Nam' : 'Nữ'}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</tbody></table>`;
 
         const buildTableHtml = (data) => `<table><thead><tr><th>Năm<br>đối phương</th><th>Mệnh</th><th>QHệ<br>Mệnh</th><th>Thiên can</th><th>QHệ<br>Thiên can</th><th>Địa chi</th><th>QHệ<br>Địa chi</th><th>Cung</th><th>QHệ<br>Cung</th><th>Niên mệnh</th><th>QHệ<br>Niên</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody>${data.map((r, idx) => `<tr><td>${r.year}</td><td>${r.menh}</td><td>${r.menhRel}</td><td>${r.thienCan}</td><td>${r.thienCanRel}</td><td>${r.diaChi}</td><td>${r.diaChiRel}</td><td>${r.cung}</td><td>${r.cungRel}</td><td>${r.niem}</td><td>${r.niemRel}</td><td><b>${r.diem.toFixed(1)}</b></td><td><button class="btn-compare" data-idx="${idx}" data-table="diff">🔍 So sánh</button></td></tr>`).join('')}</tbody></table>`;
         document.getElementById('diffGenderTable').innerHTML = buildTableHtml(rows);
@@ -1142,7 +1137,7 @@
 
         const sortedSame = [...sameGenderRows].sort((a,b) => b.diem - a.diem).slice(0,20);
         document.getElementById('top20SameGenderContainer').style.display = 'block';
-        document.getElementById('top20SameGenderContainer').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương cùng giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><tr><th>Năm</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr>${sortedSame.map(item => `<tr><td>${item.year}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</table>`;
+        document.getElementById('top20SameGenderContainer').innerHTML = `<div class="top20-title">🔟 Top 20 đối phương cùng giới hợp nhất (điểm cao nhất)</div><table class="top20-table"><thead><tr><th>Năm</th><th>Mệnh</th><th>Cung</th><th>Điểm</th></tr></thead><tbody>${sortedSame.map(item => `<tr><td>${item.year}</td><td>${item.menh}</td><td>${item.cung}</td><td><b>${item.diem.toFixed(1)}</b></td></tr>`).join('')}</tbody></table>`;
 
         let summaryRows = [];
         for (let y = start; y <= end; y++) {
